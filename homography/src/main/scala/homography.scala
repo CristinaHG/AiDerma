@@ -4,6 +4,7 @@
 
 
 import java.io.File
+import java.util
 import javax.swing.text.html.ImageView
 
 import org.opencv.calib3d.Calib3d
@@ -142,9 +143,34 @@ class homography {
     var withThreshold:Mat=new Mat()
     org.opencv.imgproc.Imgproc.threshold(mole1,withThreshold1,150,255,org.opencv.imgproc.Imgproc.THRESH_TRUNC)
     org.opencv.imgproc.Imgproc.threshold(mole2,withThreshold2,150,255,org.opencv.imgproc.Imgproc.THRESH_TRUNC)
+//    var withThreshold1Adap:Mat=new Mat()
+//    var withThreshold2Adap:Mat=new Mat()
+//    org.opencv.imgproc.Imgproc.adaptiveThreshold(mole1,withThreshold1Adap,255, org.opencv.imgproc.Imgproc.ADAPTIVE_THRESH_MEAN_C,org.opencv.imgproc.Imgproc.THRESH_BINARY,
+//      11,2)
+//    org.opencv.imgproc.Imgproc.adaptiveThreshold(mole2,withThreshold2Adap,255,org.opencv.imgproc.Imgproc.ADAPTIVE_THRESH_MEAN_C,org.opencv.imgproc.Imgproc.THRESH_BINARY,
+//      11,2)
+//
+//    Imgcodecs.imwrite("mole1ThersholdAdaptative.png",withThreshold1Adap)
+//    Imgcodecs.imwrite("mole2ThersholdAdaptative.png",withThreshold2Adap)
 
     Imgcodecs.imwrite("mole1Thershold.png",withThreshold1)
     Imgcodecs.imwrite("mole2Thershold.png",withThreshold2)
+
+    //finding contours
+    var Binarized1:Mat=new Mat()
+    var Binarized2:Mat=new Mat()
+    var contours = new util.ArrayList[MatOfPoint]();
+
+    org.opencv.imgproc.Imgproc.threshold(withThreshold1,Binarized1,127,255,org.opencv.imgproc.Imgproc.THRESH_BINARY_INV)
+    org.opencv.imgproc.Imgproc.threshold(withThreshold2,Binarized2,127,255,org.opencv.imgproc.Imgproc.THRESH_BINARY_INV)
+    var contours1=org.opencv.imgproc.Imgproc.findContours(Binarized1,contours,new Mat(),org.opencv.imgproc.Imgproc.RETR_EXTERNAL,org.opencv.imgproc.Imgproc.CHAIN_APPROX_SIMPLE)
+    //org.opencv.imgproc.Imgproc.drawContours(Binarized1,contours,1,new Scalar(200,200,200),2)
+    Binarized1.setTo(new Scalar(0))
+    org.opencv.imgproc.Imgproc.polylines(Binarized1,contours,true,new Scalar(0),-1)
+
+    Imgcodecs.imwrite("binarized1.png",Binarized1)
+    Imgcodecs.imwrite("binarized2.png",Binarized2)
+
     org.opencv.core.Core.absdiff(withThreshold1,withThreshold2, withThreshold)
     Imgcodecs.imwrite("diff.png", withThreshold)
 
