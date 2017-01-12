@@ -136,8 +136,8 @@ class homography {
     var mole1:Mat=Imgcodecs.imread("croppedHomo.png",Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
     var mole2:Mat=Imgcodecs.imread("croppedOrig.png",Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
     var diff: Mat = new Mat()
-    org.opencv.core.Core.absdiff(mole1,mole2, diff)
-    Imgcodecs.imwrite("byn.png", diff)
+    //org.opencv.core.Core.absdiff(mole1,mole2, diff)
+    //Imgcodecs.imwrite("byn.png", diff)
     //var withThreshold1:Mat=new Mat()
     //var withThreshold2:Mat=new Mat()
     //var withThreshold:Mat=new Mat()
@@ -172,12 +172,21 @@ class homography {
     //draw polylines
     Binarized1.setTo(new Scalar(0))
     Binarized2.setTo(new Scalar(0))
-    org.opencv.imgproc.Imgproc.polylines(Binarized1,contours1,true,new Scalar(255))
-    org.opencv.imgproc.Imgproc.polylines(Binarized2,contours2,true,new Scalar(255))
+    var newBinarized1:Mat=new Mat()
+    var newBinarized2:Mat=new Mat()
+    org.opencv.imgproc.Imgproc.cvtColor(Binarized1,newBinarized1,org.opencv.imgproc.Imgproc.COLOR_GRAY2RGB)
+    org.opencv.imgproc.Imgproc.cvtColor(Binarized2,newBinarized2,org.opencv.imgproc.Imgproc.COLOR_GRAY2RGB)
+    org.opencv.imgproc.Imgproc.polylines(newBinarized1,contours1,true,new Scalar(0,255,0))
+    org.opencv.imgproc.Imgproc.polylines(newBinarized2,contours2,true,new Scalar(0,0,255))
 
-    Imgcodecs.imwrite("binarized1.png",Binarized1)
-    Imgcodecs.imwrite("binarized2.png",Binarized2)
 
+    Imgcodecs.imwrite("binarized1.png",newBinarized1)
+    Imgcodecs.imwrite("binarized2.png",newBinarized2)
+
+    org.opencv.core.Core.absdiff(newBinarized1,newBinarized2, diff)
+    Imgcodecs.imwrite("byn.png", diff)
+
+    
 
     //keypoints
 

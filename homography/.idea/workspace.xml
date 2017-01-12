@@ -27,8 +27,8 @@
       <file leaf-file-name="homography.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/homography.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="179" column="0" lean-forward="true" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+            <state relative-caret-position="500">
+              <caret line="188" column="4" lean-forward="false" selection-start-line="188" selection-start-column="4" selection-end-line="188" selection-end-column="4" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#43#62#0" expanded="true" />
@@ -1041,12 +1041,12 @@
       <workItem from="1483960962661" duration="3220000" />
       <workItem from="1484125295010" duration="59000" />
       <workItem from="1484125405275" duration="8578000" />
-      <workItem from="1484210066952" duration="4756000" />
+      <workItem from="1484210066952" duration="7820000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59072000" />
+    <option name="totallyTimeSpent" value="62136000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1365" y="0" width="1282" height="1024" extended-state="6" />
@@ -1343,12 +1343,22 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/binarized2.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/diff.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/byn.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/binarized1.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -1373,20 +1383,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/binarized1.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/binarized2.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/homography.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="179" column="0" lean-forward="true" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+        <state relative-caret-position="500">
+          <caret line="188" column="4" lean-forward="false" selection-start-line="188" selection-start-column="4" selection-end-line="188" selection-end-column="4" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#43#62#0" expanded="true" />
