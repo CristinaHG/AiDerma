@@ -30,29 +30,6 @@ class homography {
     val imgDst: Mat = Imgcodecs.imread(file2)
 
     var pointsIm1 = List[Point]()
-    //calculattor1 points
-    //var p11 = new Point(148, 208)
-    //var p12 = new Point(568, 210)
-    //var p13 = new Point(144, 1042)
-    //var p14 = new Point(542, 1058)
-    //var p15 = new Point(180, 588)
-    //var p16 = new Point(176, 808)
-
-    //mole3 points
-    //var p11 = new Point(180,114)
-    //var p12 = new Point(219, 93)
-    //var p13 = new Point(218,161)
-    //var p14 = new Point(251,141)
-    //var p15 = new Point(216,73)
-    //var p16 = new Point(217,48)
-
-    //mole1
-    //var p11 = new Point(19,115)
-    //var p12 = new Point(49,82)
-    //var p13 = new Point(336,35)
-    //var p14 = new Point(381,181)
-    //var p15 = new Point(177,174)
-    //var p16 = new Point(123,183)
 
     //mole2
     var p11 = new Point(438, 298)
@@ -71,21 +48,6 @@ class homography {
     pointsIm1 = pointsIm1.reverse
 
     var pointsIm2 = List[Point]()
-    //calculator2 points
-    //var p21 = new Point(394, 192)
-    //var p22 = new Point(708, 362)
-    //var p23 = new Point(26, 832)
-    //var p24 = new Point(342, 1024)
-    //var p25 = new Point(254, 488)
-    //var p26 = new Point(156, 654)
-
-    //mole1
-    //var p21 = new Point(20,117)
-    //var p22 = new Point(150,82)
-    //var p23 = new Point(338,34)
-    //var p24 = new Point(381,182)
-    //var p25 = new Point(178,172)
-    //var p26 = new Point(123,181)
 
     //mole2
     var p21 = new Point(351, 240)
@@ -103,7 +65,6 @@ class homography {
     pointsIm2 = (p26) :: pointsIm2
     pointsIm2 = pointsIm2.reverse
 
-    //var Output:Mat=new Mat()
     var dst: MatOfPoint2f = new MatOfPoint2f()
     var src: MatOfPoint2f = new MatOfPoint2f()
 
@@ -135,6 +96,9 @@ class homography {
     //load new images
     var mole1:Mat=Imgcodecs.imread("croppedHomo.png",Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
     var mole2:Mat=Imgcodecs.imread("croppedOrig.png",Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
+
+
+
     var diff: Mat = new Mat()
     //org.opencv.core.Core.absdiff(mole1,mole2, diff)
     //Imgcodecs.imwrite("byn.png", diff)
@@ -165,9 +129,8 @@ class homography {
     org.opencv.imgproc.Imgproc.threshold(mole1,Binarized1,0,255,org.opencv.imgproc.Imgproc.THRESH_BINARY_INV+org.opencv.imgproc.Imgproc.THRESH_OTSU)
     org.opencv.imgproc.Imgproc.threshold(mole2,Binarized2,0,255,org.opencv.imgproc.Imgproc.THRESH_BINARY_INV+org.opencv.imgproc.Imgproc.THRESH_OTSU)
     //compute contours
-    org.opencv.imgproc.Imgproc.findContours(Binarized1,contours1,new Mat(),org.opencv.imgproc.Imgproc.RETR_EXTERNAL,org.opencv.imgproc.Imgproc.CHAIN_APPROX_SIMPLE)
-    org.opencv.imgproc.Imgproc.findContours(Binarized2,contours2,new Mat(),org.opencv.imgproc.Imgproc.RETR_EXTERNAL,org.opencv.imgproc.Imgproc.CHAIN_APPROX_SIMPLE)
-    // org.opencv.imgproc.Imgproc.drawContours(Binarized1,contours,1,new Scalar(200,200,200),2)
+    org.opencv.imgproc.Imgproc.findContours(Binarized1,contours1,new Mat(),org.opencv.imgproc.Imgproc.RETR_EXTERNAL,org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
+    org.opencv.imgproc.Imgproc.findContours(Binarized2,contours2,new Mat(),org.opencv.imgproc.Imgproc.RETR_EXTERNAL,org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
 
     //draw polylines
     Binarized1.setTo(new Scalar(0))
@@ -179,14 +142,34 @@ class homography {
     org.opencv.imgproc.Imgproc.polylines(newBinarized1,contours1,true,new Scalar(0,255,0))
     org.opencv.imgproc.Imgproc.polylines(newBinarized2,contours2,true,new Scalar(0,0,255))
 
+    org.opencv.imgproc.Imgproc.polylines(roiImg,contours1,true,new Scalar(0,255,0))
+    org.opencv.imgproc.Imgproc.polylines(roiImgOrig,contours2,true,new Scalar(0,0,255))
 
-    Imgcodecs.imwrite("binarized1.png",newBinarized1)
-    Imgcodecs.imwrite("binarized2.png",newBinarized2)
 
+    Imgcodecs.imwrite("binarized1.png",roiImg)
+    Imgcodecs.imwrite("binarized2.png",roiImgOrig)
+    print(roiImg.channels())
+    var transparent:Mat=new Mat(roiImg.size(),org.opencv.core.CvType.CV_8UC4)
+    var alphaChannel:Mat=new Mat(roiImg.size(),org.opencv.core.CvType.CV_8UC1)
+
+    alphaChannel.setTo(new Scalar(0.5))
+    var rgb=new util.ArrayList[Mat]()
+    rgb.add(alphaChannel)
+   // print(rgb.size())
+    org.opencv.core.Core.split(roiImg,rgb)
+    org.opencv.core.Core.merge(rgb,transparent)
+
+    //roiImg.convertTo(transparent,org.opencv.imgproc.Imgproc.COLOR_RGB2RGBA)
+    //org.opencv.imgproc.Imgproc.cvtColor(roiImg,transparent,org.opencv.imgproc.Imgproc.COLOR_RGB2RGBA)
+
+
+    Imgcodecs.imwrite("binarized1.png",transparent)
     org.opencv.core.Core.absdiff(newBinarized1,newBinarized2, diff)
     Imgcodecs.imwrite("byn.png", diff)
 
-    
+
+
+
 
     //keypoints
 
