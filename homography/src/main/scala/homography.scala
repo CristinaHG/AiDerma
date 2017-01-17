@@ -23,14 +23,25 @@ import org.opencv.imgproc.Imgproc.rectangle
 import scala.collection.JavaConverters._
 class homography {
   def run = {
+
+    /*
+    //mole2
     val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole2.jpeg"
     val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/425806267_118435_bigger_rotated.jpg"
+    */
+
+    //mole1
+    val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole1.jpeg"
+    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/429721776_20725_bigger.jpg"
+
 
     val imgSrc: Mat = Imgcodecs.imread(file1)
     val imgDst: Mat = Imgcodecs.imread(file2)
 
     var pointsIm1 = List[Point]()
+    var pointsIm2 = List[Point]()
 
+    /*
     //mole2
     var p11 = new Point(438, 298)
     var p12 = new Point(435, 274)
@@ -47,7 +58,6 @@ class homography {
     pointsIm1 = (p16) :: pointsIm1
     pointsIm1 = pointsIm1.reverse
 
-    var pointsIm2 = List[Point]()
 
     //mole2
     var p21 = new Point(351, 240)
@@ -64,6 +74,41 @@ class homography {
     pointsIm2 = (p25) :: pointsIm2
     pointsIm2 = (p26) :: pointsIm2
     pointsIm2 = pointsIm2.reverse
+    */
+
+    //mole1
+    var p11 = new Point(20,111)
+    var p12 = new Point(213,20)
+    var p13 = new Point(309,30)
+    var p14 = new Point(414,113)
+    var p15 = new Point(381,181)
+    var p16 = new Point(133,144)
+
+    pointsIm1 = (p11) :: pointsIm1
+    pointsIm1 = (p12) :: pointsIm1
+    pointsIm1 = (p13) :: pointsIm1
+    pointsIm1 = (p14) :: pointsIm1
+    pointsIm1 = (p15) :: pointsIm1
+    pointsIm1 = (p16) :: pointsIm1
+    pointsIm1 = pointsIm1.reverse
+
+
+    //mole1
+    var p21 = new Point(20,112)
+    var p22 = new Point(212,20)
+    var p23 = new Point(309,32)
+    var p24 = new Point(415,115)
+    var p25 = new Point(381,181)
+    var p26 = new Point(136,141)
+
+    pointsIm2 = (p21) :: pointsIm2
+    pointsIm2 = (p22) :: pointsIm2
+    pointsIm2 = (p23) :: pointsIm2
+    pointsIm2 = (p24) :: pointsIm2
+    pointsIm2 = (p25) :: pointsIm2
+    pointsIm2 = (p26) :: pointsIm2
+    pointsIm2 = pointsIm2.reverse
+
 
     var dst: MatOfPoint2f = new MatOfPoint2f()
     var src: MatOfPoint2f = new MatOfPoint2f()
@@ -85,8 +130,8 @@ class homography {
     Imgcodecs.imwrite(f2, imgDst)
 
     var cropped = new Mat()
-    var rect: Rect = new Rect(Output.cols() / 2 - 125, Output.rows() / 2 - 125, 200, 200)
-    //var roi=rectangle(Output,new Point(332,232), new Point(334,337),new Scalar(0,255,0) ,3)
+    //var rect: Rect = new Rect(Output.cols() / 2 - 125, Output.rows() / 2 - 125, 200, 200) //mole2
+    var rect: Rect = new Rect(Output.cols() / 2 - 235, Output.rows() / 2 - 124, 450, 243) //mole1
     var roiImg = Output.submat(rect)
     var roiImgOrig = imgDst.submat(rect)
     Imgcodecs.imwrite("croppedHomo.png", roiImg)
@@ -131,9 +176,9 @@ class homography {
     //compute contours
     org.opencv.imgproc.Imgproc.findContours(Binarized1,contours1,new Mat(),org.opencv.imgproc.Imgproc.RETR_EXTERNAL,org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
     org.opencv.imgproc.Imgproc.findContours(Binarized2,contours2,new Mat(),org.opencv.imgproc.Imgproc.RETR_EXTERNAL,org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
-    var cnt1=contours1.get(0)
-    var cnt2=contours2.get(0)
-    print("matching shapes="+ org.opencv.imgproc.Imgproc.matchShapes(cnt1,cnt2,1,0.0))
+    var cnt1=contours1.get(5)
+    var cnt2=contours2.get(5)
+    print("matching shapes="+ org.opencv.imgproc.Imgproc.matchShapes(cnt1,cnt2,1,0))
     //draw polylines
     Binarized1.setTo(new Scalar(0))
     Binarized2.setTo(new Scalar(0))
@@ -150,6 +195,7 @@ class homography {
 
     Imgcodecs.imwrite("binarized1.png",roiImg)
     Imgcodecs.imwrite("binarized2.png",roiImgOrig)
+    /*
     print(roiImg.channels())
     var transparent:Mat=new Mat(roiImg.size(),org.opencv.core.CvType.CV_8UC4)
     var alphaChannel:Mat=new Mat(roiImg.size(),org.opencv.core.CvType.CV_8UC1)
@@ -166,6 +212,7 @@ class homography {
 
 
     Imgcodecs.imwrite("binarized1.png",transparent)
+    */
     org.opencv.core.Core.absdiff(newBinarized1,newBinarized2, diff)
     Imgcodecs.imwrite("byn.png", diff)
 
