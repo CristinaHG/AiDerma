@@ -131,7 +131,9 @@ class homography {
     //compute contours
     org.opencv.imgproc.Imgproc.findContours(Binarized1,contours1,new Mat(),org.opencv.imgproc.Imgproc.RETR_EXTERNAL,org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
     org.opencv.imgproc.Imgproc.findContours(Binarized2,contours2,new Mat(),org.opencv.imgproc.Imgproc.RETR_EXTERNAL,org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
-
+    var cnt1=contours1.get(0)
+    var cnt2=contours2.get(0)
+    print("matching shapes="+ org.opencv.imgproc.Imgproc.matchShapes(cnt1,cnt2,1,0.0))
     //draw polylines
     Binarized1.setTo(new Scalar(0))
     Binarized2.setTo(new Scalar(0))
