@@ -176,9 +176,11 @@ class homography {
     //compute contours
     org.opencv.imgproc.Imgproc.findContours(Binarized1,contours1,new Mat(),org.opencv.imgproc.Imgproc.RETR_EXTERNAL,org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
     org.opencv.imgproc.Imgproc.findContours(Binarized2,contours2,new Mat(),org.opencv.imgproc.Imgproc.RETR_EXTERNAL,org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
-    var cnt1=contours1.get(5)
-    var cnt2=contours2.get(5)
-    print("matching shapes="+ org.opencv.imgproc.Imgproc.matchShapes(cnt1,cnt2,1,0))
+    Imgcodecs.imwrite("shape1.png",Binarized1)
+    Imgcodecs.imwrite("shape2.png",Binarized2)
+    var cnt1=contours1.get(0)
+    var cnt2=contours2.get(0)
+    print("matching shapes="+ org.opencv.imgproc.Imgproc.matchShapes(cnt1,cnt2,org.opencv.imgproc.Imgproc.CV_CONTOURS_MATCH_I1,0))
     //draw polylines
     Binarized1.setTo(new Scalar(0))
     Binarized2.setTo(new Scalar(0))
@@ -236,11 +238,11 @@ class homography {
     var detector:FeatureDetector=FeatureDetector.create(FeatureDetector.ORB)
     var extractor:DescriptorExtractor=DescriptorExtractor.create(DescriptorExtractor.ORB)
 
-    detector.detect(mole1,kp1)
-    detector.detect(mole2,kp2)
+    detector.detect(newBinarized1,kp1)
+    detector.detect(newBinarized2,kp2)
 
-    extractor.compute(mole1,kp1,descriptors1)
-    extractor.compute(mole2,kp2,descriptors2)
+    extractor.compute(newBinarized1,kp1,descriptors1)
+    extractor.compute(newBinarized2,kp2,descriptors2)
 
     var matcher:org.opencv.features2d.DescriptorMatcher=DescriptorMatcher.create(DescriptorMatcher.BRUTEFORCE_HAMMING)
 
@@ -249,11 +251,33 @@ class homography {
 
     var outputIMG:Mat=new Mat()
     var drawnMatches:MatOfByte  = new MatOfByte()
-    org.opencv.features2d.Features2d.drawMatches(mole1,kp1,mole2,kp2,matches,outputIMG,new Scalar(255,0,0),new Scalar(0,255,0),drawnMatches,org.opencv.features2d.Features2d.NOT_DRAW_SINGLE_POINTS)
+    org.opencv.features2d.Features2d.drawMatches(newBinarized1,kp1,newBinarized2,kp2,matches,outputIMG,new Scalar(255,0,0),new Scalar(0,255,0),drawnMatches,org.opencv.features2d.Features2d.NOT_DRAW_SINGLE_POINTS)
 
     Imgcodecs.imwrite("matches.png",outputIMG)
 
+    //hough circle transformation
+    var srcCoins=new Mat()
+    var srcCoinsGray=new Mat()
 
+    srcCoins=org.opencv.imgcodecs.Imgcodecs.imread("/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/coins.jpg")
+    org.opencv.imgproc.Imgproc.cvtColor(srcCoins,srcCoinsGray,org.opencv.imgproc.Imgproc.COLOR_RGB2GRAY)
+    //reduce the noise
+    org.opencv.imgproc.Imgproc.GaussianBlur(srcCoinsGray,srcCoinsGray,new Size(9,9),2,2)
+
+    var circles=new Mat()
+    org.opencv.imgproc.Imgproc.HoughCircles(srcCoinsGray,circles,org.opencv.imgproc.Imgproc.CV_HOUGH_GRADIENT,1,srcCoinsGray.rows()/8, 200,100,0,0)
+
+    var x:Int=0
+    /// Draw the circles detected
+    for (x<-0 until circles.cols() ){
+      var vCircle=circles.get(0,x)
+      var center:Point=new Point(Math.round(vCircle(0)),Math.round(vCircle(1)))
+      var ratio=Math.round(vCircle(2)).toInt
+      //draw the found circle
+      org.opencv.imgproc.Imgproc.circle(srcCoins,center,ratio,new Scalar(0,255,255),3)
+
+    }
+    Imgcodecs.imwrite("HoughCoins.png",srcCoins)
 
   }
 }
