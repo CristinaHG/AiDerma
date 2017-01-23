@@ -24,25 +24,15 @@
     <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.12.1:jar" level="project" />
     <orderEntry type="module-library">
       <library>
-        <CLASSES />
-        <JAVADOC />
-        <NATIVE>
-          <root url="file://$USER_HOME$/build/lib" />
-        </NATIVE>
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="module-library">
-      <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/opencv-3.2.0/build/bin/opencv-320.jar!/" />
+          <root url="jar://$USER_HOME$/opencv-3.2.02/build/bin/opencv-320.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/opencv-3.2.0/build/bin/opencv-320.jar!/" />
+          <root url="jar://$USER_HOME$/opencv-3.2.02/build/bin/opencv-320.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="libOpencv" level="project" />
   </component>
 </module>

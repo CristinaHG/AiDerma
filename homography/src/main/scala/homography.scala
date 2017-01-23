@@ -235,8 +235,8 @@ class homography {
     var descriptors1:Mat=new Mat()
     var descriptors2:Mat=new Mat()
 
-    var detector:FeatureDetector=FeatureDetector.create(FeatureDetector.ORB)
-    var extractor:DescriptorExtractor=DescriptorExtractor.create(DescriptorExtractor.ORB)
+    var detector:FeatureDetector=FeatureDetector.create(FeatureDetector.SURF)
+    var extractor:DescriptorExtractor=DescriptorExtractor.create(DescriptorExtractor.SURF)
 
     detector.detect(newBinarized1,kp1)
     detector.detect(newBinarized2,kp2)
@@ -244,9 +244,14 @@ class homography {
     extractor.compute(newBinarized1,kp1,descriptors1)
     extractor.compute(newBinarized2,kp2,descriptors2)
 
-    var matcher:org.opencv.features2d.DescriptorMatcher=DescriptorMatcher.create(DescriptorMatcher.BRUTEFORCE_HAMMING)
+    var matcher:org.opencv.features2d.DescriptorMatcher=DescriptorMatcher.create(DescriptorMatcher.FLANNBASED)
 
     var matches:MatOfDMatch=new MatOfDMatch()
+    print("d1 size=" + descriptors1.size())
+    print("d2 size=" + descriptors2.size())
+
+    if(descriptors1.`type`()!=CvType.CV_32F) descriptors1.convertTo(descriptors1,CvType.CV_32F)
+    if(descriptors2.`type`()!=CvType.CV_32F) descriptors2.convertTo(descriptors2,CvType.CV_32F)
     matcher.`match`(descriptors1,descriptors2,matches)
 
     var outputIMG:Mat=new Mat()
@@ -263,7 +268,7 @@ class homography {
     org.opencv.imgproc.Imgproc.cvtColor(srcCoins,srcCoinsGray,org.opencv.imgproc.Imgproc.COLOR_RGB2GRAY)
     //reduce the noise
     org.opencv.imgproc.Imgproc.GaussianBlur(srcCoinsGray,srcCoinsGray,new Size(9,9),2,2)
-
+    //Imgcodecs.imwrite("blurred.png",srcCoinsGray)
     var circles=new Mat()
     org.opencv.imgproc.Imgproc.HoughCircles(srcCoinsGray,circles,org.opencv.imgproc.Imgproc.CV_HOUGH_GRADIENT,1,srcCoinsGray.rows()/8, 200,100,0,0)
 
