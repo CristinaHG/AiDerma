@@ -38,6 +38,9 @@ class homography {
     val imgSrc: Mat = Imgcodecs.imread(file1)
     val imgDst: Mat = Imgcodecs.imread(file2)
 
+    val imgSrcCopy: Mat = Imgcodecs.imread(file1)
+    val imgDstCopy: Mat = Imgcodecs.imread(file2)
+
     var pointsIm1 = List[Point]()
     var pointsIm2 = List[Point]()
 
@@ -235,14 +238,17 @@ class homography {
     var descriptors1:Mat=new Mat()
     var descriptors2:Mat=new Mat()
 
-    var detector:FeatureDetector=FeatureDetector.create(FeatureDetector.SURF)
-    var extractor:DescriptorExtractor=DescriptorExtractor.create(DescriptorExtractor.SURF)
+    var detector:FeatureDetector=FeatureDetector.create(FeatureDetector.SIFT)
+    var extractor:DescriptorExtractor=DescriptorExtractor.create(DescriptorExtractor.SIFT)
 
-    detector.detect(newBinarized1,kp1)
-    detector.detect(newBinarized2,kp2)
+    Imgcodecs.imwrite("srcCopy.png",imgSrcCopy)
+    Imgcodecs.imwrite("dstCopy.png",imgDstCopy)
 
-    extractor.compute(newBinarized1,kp1,descriptors1)
-    extractor.compute(newBinarized2,kp2,descriptors2)
+    detector.detect(imgSrcCopy,kp1)
+    detector.detect(imgDstCopy,kp2)
+
+    extractor.compute(imgSrcCopy,kp1,descriptors1)
+    extractor.compute(imgDstCopy,kp2,descriptors2)
 
     var matcher:org.opencv.features2d.DescriptorMatcher=DescriptorMatcher.create(DescriptorMatcher.FLANNBASED)
 
@@ -256,7 +262,7 @@ class homography {
 
     var outputIMG:Mat=new Mat()
     var drawnMatches:MatOfByte  = new MatOfByte()
-    org.opencv.features2d.Features2d.drawMatches(newBinarized1,kp1,newBinarized2,kp2,matches,outputIMG,new Scalar(255,0,0),new Scalar(0,255,0),drawnMatches,org.opencv.features2d.Features2d.NOT_DRAW_SINGLE_POINTS)
+    org.opencv.features2d.Features2d.drawMatches(imgSrcCopy,kp1,imgDstCopy,kp2,matches,outputIMG,new Scalar(255,0,0),new Scalar(0,255,0),drawnMatches,org.opencv.features2d.Features2d.NOT_DRAW_SINGLE_POINTS)
 
     Imgcodecs.imwrite("matches.png",outputIMG)
 
