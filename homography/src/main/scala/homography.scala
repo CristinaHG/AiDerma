@@ -38,8 +38,8 @@ class homography {
     val imgSrc: Mat = Imgcodecs.imread(file1)
     val imgDst: Mat = Imgcodecs.imread(file2)
 
-    val imgSrcCopy: Mat = Imgcodecs.imread(file1)
-    val imgDstCopy: Mat = Imgcodecs.imread(file2)
+    val imgSrcCopy: Mat = Imgcodecs.imread(file1,Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
+    val imgDstCopy: Mat = Imgcodecs.imread(file2,Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
 
     var pointsIm1 = List[Point]()
     var pointsIm2 = List[Point]()
@@ -260,11 +260,20 @@ class homography {
     if(descriptors2.`type`()!=CvType.CV_32F) descriptors2.convertTo(descriptors2,CvType.CV_32F)
     matcher.`match`(descriptors1,descriptors2,matches)
 
+    var bestMatches:MatOfDMatch=new MatOfDMatch()
+    var matchesCopy=matches
+    var ordered=matches.toArray.sortWith(_.distance<_.distance).take(7)
+      ordered.foreach( f=>{
+      var indexInMatches=f.queryIdx
+      bestMatches.push_back(matchesCopy.row(indexInMatches))
+    })
+
+
     var outputIMG:Mat=new Mat()
     var drawnMatches:MatOfByte  = new MatOfByte()
-    org.opencv.features2d.Features2d.drawMatches(imgSrcCopy,kp1,imgDstCopy,kp2,matches,outputIMG,new Scalar(255,0,0),new Scalar(0,255,0),drawnMatches,org.opencv.features2d.Features2d.NOT_DRAW_SINGLE_POINTS)
+    org.opencv.features2d.Features2d.drawMatches(imgSrcCopy,kp1,imgDstCopy,kp2,bestMatches,outputIMG,new Scalar(255,0,0),new Scalar(0,255,0),drawnMatches,org.opencv.features2d.Features2d.NOT_DRAW_SINGLE_POINTS)
 
-    Imgcodecs.imwrite("matches.png",outputIMG)
+    Imgcodecs.imwrite("matchesFAST_SIFTReduced.png",outputIMG)
 
     //hough circle transformation
     var srcCoins=new Mat()
@@ -291,7 +300,10 @@ class homography {
     Imgcodecs.imwrite("HoughCoins.png",srcCoins)
 
   }
+
+
 }
+
 object MyHomography{
 
   def main(args: Array[String]): Unit
