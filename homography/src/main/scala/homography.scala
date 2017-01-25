@@ -16,12 +16,19 @@ import org.opencv.core.Rect
 import org.opencv.core.Scalar
 import org.opencv.features2d.{DescriptorExtractor, DescriptorMatcher, FeatureDetector}
 import org.opencv.imgproc.Imgproc
+
+import scala.math.BigDecimal
 //import org.opencv.highgui.Highgui;
 import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.objdetect.CascadeClassifier
 import org.opencv.imgproc.Imgproc.rectangle
 import scala.collection.JavaConverters._
+import scala.math.BigDecimal
+
+
+
 class homography {
+
   def run = {
 
     /*
@@ -32,14 +39,14 @@ class homography {
 
     //mole1
     val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole1.jpeg"
-    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/429721776_20725_bigger.jpg"
+    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/429721776_20725_biggerAlpha.jpg"
 
 
     val imgSrc: Mat = Imgcodecs.imread(file1)
     val imgDst: Mat = Imgcodecs.imread(file2)
 
-    val imgSrcCopy: Mat = Imgcodecs.imread(file1,Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
-    val imgDstCopy: Mat = Imgcodecs.imread(file2,Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
+    val imgSrcCopy: Mat = Imgcodecs.imread(file1, Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
+    val imgDstCopy: Mat = Imgcodecs.imread(file2, Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
 
     var pointsIm1 = List[Point]()
     var pointsIm2 = List[Point]()
@@ -80,12 +87,12 @@ class homography {
     */
 
     //mole1
-    var p11 = new Point(20,111)
-    var p12 = new Point(213,20)
-    var p13 = new Point(309,30)
-    var p14 = new Point(414,113)
-    var p15 = new Point(381,181)
-    var p16 = new Point(133,144)
+    var p11 = new Point(20, 111)
+    var p12 = new Point(213, 20)
+    var p13 = new Point(309, 30)
+    var p14 = new Point(414, 113)
+    var p15 = new Point(381, 181)
+    var p16 = new Point(133, 144)
 
     pointsIm1 = (p11) :: pointsIm1
     pointsIm1 = (p12) :: pointsIm1
@@ -97,12 +104,12 @@ class homography {
 
 
     //mole1
-    var p21 = new Point(20,112)
-    var p22 = new Point(212,20)
-    var p23 = new Point(309,32)
-    var p24 = new Point(415,115)
-    var p25 = new Point(381,181)
-    var p26 = new Point(136,141)
+    var p21 = new Point(20, 112)
+    var p22 = new Point(212, 20)
+    var p23 = new Point(309, 32)
+    var p24 = new Point(415, 115)
+    var p25 = new Point(381, 181)
+    var p26 = new Point(136, 141)
 
     pointsIm2 = (p21) :: pointsIm2
     pointsIm2 = (p22) :: pointsIm2
@@ -134,7 +141,8 @@ class homography {
 
     var cropped = new Mat()
     //var rect: Rect = new Rect(Output.cols() / 2 - 125, Output.rows() / 2 - 125, 200, 200) //mole2
-    var rect: Rect = new Rect(Output.cols() / 2 - 235, Output.rows() / 2 - 124, 450, 243) //mole1
+    var rect: Rect = new Rect(Output.cols() / 2 - 235, Output.rows() / 2 - 124, 450, 243)
+    //mole1
     var roiImg = Output.submat(rect)
     var roiImgOrig = imgDst.submat(rect)
     Imgcodecs.imwrite("croppedHomo.png", roiImg)
@@ -142,9 +150,8 @@ class homography {
 
 
     //load new images
-    var mole1:Mat=Imgcodecs.imread("croppedHomo.png",Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
-    var mole2:Mat=Imgcodecs.imread("croppedOrig.png",Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
-
+    var mole1: Mat = Imgcodecs.imread("croppedHomo.png", Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
+    var mole2: Mat = Imgcodecs.imread("croppedOrig.png", Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
 
 
     var diff: Mat = new Mat()
@@ -155,51 +162,51 @@ class homography {
     //var withThreshold:Mat=new Mat()
     //org.opencv.imgproc.Imgproc.threshold(mole1,withThreshold1,150,255,org.opencv.imgproc.Imgproc.THRESH_TRUNC)
     //org.opencv.imgproc.Imgproc.threshold(mole2,withThreshold2,150,255,org.opencv.imgproc.Imgproc.THRESH_TRUNC)
-//    var withThreshold1Adap:Mat=new Mat()
-//    var withThreshold2Adap:Mat=new Mat()
-//    org.opencv.imgproc.Imgproc.adaptiveThreshold(mole1,withThreshold1Adap,255, org.opencv.imgproc.Imgproc.ADAPTIVE_THRESH_MEAN_C,org.opencv.imgproc.Imgproc.THRESH_BINARY,
-//      11,2)
-//    org.opencv.imgproc.Imgproc.adaptiveThreshold(mole2,withThreshold2Adap,255,org.opencv.imgproc.Imgproc.ADAPTIVE_THRESH_MEAN_C,org.opencv.imgproc.Imgproc.THRESH_BINARY,
-//      11,2)
-//
-//    Imgcodecs.imwrite("mole1ThersholdAdaptative.png",withThreshold1Adap)
-//    Imgcodecs.imwrite("mole2ThersholdAdaptative.png",withThreshold2Adap)
+    //    var withThreshold1Adap:Mat=new Mat()
+    //    var withThreshold2Adap:Mat=new Mat()
+    //    org.opencv.imgproc.Imgproc.adaptiveThreshold(mole1,withThreshold1Adap,255, org.opencv.imgproc.Imgproc.ADAPTIVE_THRESH_MEAN_C,org.opencv.imgproc.Imgproc.THRESH_BINARY,
+    //      11,2)
+    //    org.opencv.imgproc.Imgproc.adaptiveThreshold(mole2,withThreshold2Adap,255,org.opencv.imgproc.Imgproc.ADAPTIVE_THRESH_MEAN_C,org.opencv.imgproc.Imgproc.THRESH_BINARY,
+    //      11,2)
+    //
+    //    Imgcodecs.imwrite("mole1ThersholdAdaptative.png",withThreshold1Adap)
+    //    Imgcodecs.imwrite("mole2ThersholdAdaptative.png",withThreshold2Adap)
 
     //Imgcodecs.imwrite("mole1Thershold.png",withThreshold1)
     //Imgcodecs.imwrite("mole2Thershold.png",withThreshold2)
 
     //finding contours
-    var Binarized1:Mat=new Mat()
-    var Binarized2:Mat=new Mat()
+    var Binarized1: Mat = new Mat()
+    var Binarized2: Mat = new Mat()
     var contours1 = new util.ArrayList[MatOfPoint]()
     var contours2 = new util.ArrayList[MatOfPoint]()
     //copmute thresholds
-    org.opencv.imgproc.Imgproc.threshold(mole1,Binarized1,0,255,org.opencv.imgproc.Imgproc.THRESH_BINARY_INV+org.opencv.imgproc.Imgproc.THRESH_OTSU)
-    org.opencv.imgproc.Imgproc.threshold(mole2,Binarized2,0,255,org.opencv.imgproc.Imgproc.THRESH_BINARY_INV+org.opencv.imgproc.Imgproc.THRESH_OTSU)
+    org.opencv.imgproc.Imgproc.threshold(mole1, Binarized1, 0, 255, org.opencv.imgproc.Imgproc.THRESH_BINARY_INV + org.opencv.imgproc.Imgproc.THRESH_OTSU)
+    org.opencv.imgproc.Imgproc.threshold(mole2, Binarized2, 0, 255, org.opencv.imgproc.Imgproc.THRESH_BINARY_INV + org.opencv.imgproc.Imgproc.THRESH_OTSU)
     //compute contours
-    org.opencv.imgproc.Imgproc.findContours(Binarized1,contours1,new Mat(),org.opencv.imgproc.Imgproc.RETR_EXTERNAL,org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
-    org.opencv.imgproc.Imgproc.findContours(Binarized2,contours2,new Mat(),org.opencv.imgproc.Imgproc.RETR_EXTERNAL,org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
-    Imgcodecs.imwrite("shape1.png",Binarized1)
-    Imgcodecs.imwrite("shape2.png",Binarized2)
-    var cnt1=contours1.get(0)
-    var cnt2=contours2.get(0)
-    print("matching shapes="+ org.opencv.imgproc.Imgproc.matchShapes(cnt1,cnt2,org.opencv.imgproc.Imgproc.CV_CONTOURS_MATCH_I1,0))
+    org.opencv.imgproc.Imgproc.findContours(Binarized1, contours1, new Mat(), org.opencv.imgproc.Imgproc.RETR_EXTERNAL, org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
+    org.opencv.imgproc.Imgproc.findContours(Binarized2, contours2, new Mat(), org.opencv.imgproc.Imgproc.RETR_EXTERNAL, org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
+    Imgcodecs.imwrite("shape1.png", Binarized1)
+    Imgcodecs.imwrite("shape2.png", Binarized2)
+    var cnt1 = contours1.get(0)
+    var cnt2 = contours2.get(0)
+    print("matching shapes=" + org.opencv.imgproc.Imgproc.matchShapes(cnt1, cnt2, org.opencv.imgproc.Imgproc.CV_CONTOURS_MATCH_I1, 0))
     //draw polylines
     Binarized1.setTo(new Scalar(0))
     Binarized2.setTo(new Scalar(0))
-    var newBinarized1:Mat=new Mat()
-    var newBinarized2:Mat=new Mat()
-    org.opencv.imgproc.Imgproc.cvtColor(Binarized1,newBinarized1,org.opencv.imgproc.Imgproc.COLOR_GRAY2RGB)
-    org.opencv.imgproc.Imgproc.cvtColor(Binarized2,newBinarized2,org.opencv.imgproc.Imgproc.COLOR_GRAY2RGB)
-    org.opencv.imgproc.Imgproc.polylines(newBinarized1,contours1,true,new Scalar(0,255,0))
-    org.opencv.imgproc.Imgproc.polylines(newBinarized2,contours2,true,new Scalar(0,0,255))
+    var newBinarized1: Mat = new Mat()
+    var newBinarized2: Mat = new Mat()
+    org.opencv.imgproc.Imgproc.cvtColor(Binarized1, newBinarized1, org.opencv.imgproc.Imgproc.COLOR_GRAY2RGB)
+    org.opencv.imgproc.Imgproc.cvtColor(Binarized2, newBinarized2, org.opencv.imgproc.Imgproc.COLOR_GRAY2RGB)
+    org.opencv.imgproc.Imgproc.polylines(newBinarized1, contours1, true, new Scalar(0, 255, 0))
+    org.opencv.imgproc.Imgproc.polylines(newBinarized2, contours2, true, new Scalar(0, 0, 255))
 
-    org.opencv.imgproc.Imgproc.polylines(roiImg,contours1,true,new Scalar(0,255,0))
-    org.opencv.imgproc.Imgproc.polylines(roiImgOrig,contours2,true,new Scalar(0,0,255))
+    org.opencv.imgproc.Imgproc.polylines(roiImg, contours1, true, new Scalar(0, 255, 0))
+    org.opencv.imgproc.Imgproc.polylines(roiImgOrig, contours2, true, new Scalar(0, 0, 255))
 
 
-    Imgcodecs.imwrite("binarized1.png",roiImg)
-    Imgcodecs.imwrite("binarized2.png",roiImgOrig)
+    Imgcodecs.imwrite("binarized1.png", roiImg)
+    Imgcodecs.imwrite("binarized2.png", roiImgOrig)
     /*
     print(roiImg.channels())
     var transparent:Mat=new Mat(roiImg.size(),org.opencv.core.CvType.CV_8UC4)
@@ -218,11 +225,8 @@ class homography {
 
     Imgcodecs.imwrite("binarized1.png",transparent)
     */
-    org.opencv.core.Core.absdiff(newBinarized1,newBinarized2, diff)
+    org.opencv.core.Core.absdiff(newBinarized1, newBinarized2, diff)
     Imgcodecs.imwrite("byn.png", diff)
-
-
-
 
 
     //keypoints
@@ -233,75 +237,94 @@ class homography {
 
     //Imgcodecs.imwrite("gray.png",mole1)
 
-    var kp1:MatOfKeyPoint=new MatOfKeyPoint()
-    var kp2:MatOfKeyPoint=new MatOfKeyPoint()
-    var descriptors1:Mat=new Mat()
-    var descriptors2:Mat=new Mat()
+    var kp1: MatOfKeyPoint = new MatOfKeyPoint()
+    var kp2: MatOfKeyPoint = new MatOfKeyPoint()
+    var descriptors1: Mat = new Mat()
+    var descriptors2: Mat = new Mat()
 
-    var detector:FeatureDetector=FeatureDetector.create(FeatureDetector.SIFT)
-    var extractor:DescriptorExtractor=DescriptorExtractor.create(DescriptorExtractor.SIFT)
+    var detector: FeatureDetector = FeatureDetector.create(FeatureDetector.ORB)
+    var extractor: DescriptorExtractor = DescriptorExtractor.create(DescriptorExtractor.ORB)
 
-    Imgcodecs.imwrite("srcCopy.png",imgSrcCopy)
-    Imgcodecs.imwrite("dstCopy.png",imgDstCopy)
+    Imgcodecs.imwrite("srcCopy.png", imgSrcCopy)
+    Imgcodecs.imwrite("dstCopy.png", imgDstCopy)
 
-    detector.detect(imgSrcCopy,kp1)
-    detector.detect(imgDstCopy,kp2)
+    detector.detect(imgSrcCopy, kp1)
+    detector.detect(imgDstCopy, kp2)
 
-    extractor.compute(imgSrcCopy,kp1,descriptors1)
-    extractor.compute(imgDstCopy,kp2,descriptors2)
+    extractor.compute(imgSrcCopy, kp1, descriptors1)
+    extractor.compute(imgDstCopy, kp2, descriptors2)
 
-    var matcher:org.opencv.features2d.DescriptorMatcher=DescriptorMatcher.create(DescriptorMatcher.FLANNBASED)
+    var matcher: org.opencv.features2d.DescriptorMatcher = DescriptorMatcher.create(DescriptorMatcher.FLANNBASED)
 
-    var matches:MatOfDMatch=new MatOfDMatch()
+    var matches: MatOfDMatch = new MatOfDMatch()
     print("d1 size=" + descriptors1.size())
     print("d2 size=" + descriptors2.size())
 
-    if(descriptors1.`type`()!=CvType.CV_32F) descriptors1.convertTo(descriptors1,CvType.CV_32F)
-    if(descriptors2.`type`()!=CvType.CV_32F) descriptors2.convertTo(descriptors2,CvType.CV_32F)
-    matcher.`match`(descriptors1,descriptors2,matches)
+    if (descriptors1.`type`() != CvType.CV_32F) descriptors1.convertTo(descriptors1, CvType.CV_32F)
+    if (descriptors2.`type`() != CvType.CV_32F) descriptors2.convertTo(descriptors2, CvType.CV_32F)
+    matcher.`match`(descriptors1, descriptors2, matches)
 
-    var bestMatches:MatOfDMatch=new MatOfDMatch()
-    var matchesCopy=matches
-    var ordered=matches.toArray.sortWith(_.distance<_.distance).take(7)
-      ordered.foreach( f=>{
-      var indexInMatches=f.queryIdx
+    var bestMatches: MatOfDMatch = new MatOfDMatch()
+    var matchesCopy = matches
+    var ordered = matches.toArray.sortWith(_.distance < _.distance).take(7)
+    ordered.foreach(f => {
+      var indexInMatches = f.queryIdx
       bestMatches.push_back(matchesCopy.row(indexInMatches))
     })
 
 
-    var outputIMG:Mat=new Mat()
-    var drawnMatches:MatOfByte  = new MatOfByte()
-    org.opencv.features2d.Features2d.drawMatches(imgSrcCopy,kp1,imgDstCopy,kp2,bestMatches,outputIMG,new Scalar(255,0,0),new Scalar(0,255,0),drawnMatches,org.opencv.features2d.Features2d.NOT_DRAW_SINGLE_POINTS)
+    //geting pixels from pdescriptors matches
+    var pointsIm1best = List[Point]()
+    var pointsIm2best = List[Point]()
 
-    Imgcodecs.imwrite("matchesFAST_SIFTReduced.png",outputIMG)
+
+    bestMatches.toArray.foreach(f => {
+      var p1 = new Point(BigDecimal(kp1.get(f.queryIdx, 0) {
+        0
+      }).setScale(2,BigDecimal.RoundingMode.HALF_UP).toDouble, BigDecimal(kp1.get(f.queryIdx, 0) {
+        1
+      }).setScale(2,BigDecimal.RoundingMode.HALF_UP).toDouble)
+      var p2 = new Point(BigDecimal(kp1.get(f.trainIdx, 0) {
+        0
+      }).setScale(2,BigDecimal.RoundingMode.HALF_UP).toDouble, BigDecimal(kp1.get(f.trainIdx, 0) {
+        1
+      }).setScale(2,BigDecimal.RoundingMode.HALF_UP).toDouble)
+      pointsIm1best = (p1) :: pointsIm1best
+      pointsIm2best = (p2) :: pointsIm2best
+    })
+
+
+    var outputIMG: Mat = new Mat()
+    var drawnMatches: MatOfByte = new MatOfByte()
+    org.opencv.features2d.Features2d.drawMatches(imgSrcCopy, kp1, imgDstCopy, kp2, bestMatches, outputIMG, new Scalar(255, 0, 0), new Scalar(0, 255, 0), drawnMatches, org.opencv.features2d.Features2d.NOT_DRAW_SINGLE_POINTS)
+
+    Imgcodecs.imwrite("matchesFAST_BRISKReduced.png", outputIMG)
 
     //hough circle transformation
-    var srcCoins=new Mat()
-    var srcCoinsGray=new Mat()
+    var srcCoins = new Mat()
+    var srcCoinsGray = new Mat()
 
-    srcCoins=org.opencv.imgcodecs.Imgcodecs.imread("/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/coins.jpg")
-    org.opencv.imgproc.Imgproc.cvtColor(srcCoins,srcCoinsGray,org.opencv.imgproc.Imgproc.COLOR_RGB2GRAY)
+    srcCoins = org.opencv.imgcodecs.Imgcodecs.imread("/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/coins.jpg")
+    org.opencv.imgproc.Imgproc.cvtColor(srcCoins, srcCoinsGray, org.opencv.imgproc.Imgproc.COLOR_RGB2GRAY)
     //reduce the noise
-    org.opencv.imgproc.Imgproc.GaussianBlur(srcCoinsGray,srcCoinsGray,new Size(9,9),2,2)
+    org.opencv.imgproc.Imgproc.GaussianBlur(srcCoinsGray, srcCoinsGray, new Size(9, 9), 2, 2)
     //Imgcodecs.imwrite("blurred.png",srcCoinsGray)
-    var circles=new Mat()
-    org.opencv.imgproc.Imgproc.HoughCircles(srcCoinsGray,circles,org.opencv.imgproc.Imgproc.CV_HOUGH_GRADIENT,1,srcCoinsGray.rows()/8, 200,100,0,0)
+    var circles = new Mat()
+    org.opencv.imgproc.Imgproc.HoughCircles(srcCoinsGray, circles, org.opencv.imgproc.Imgproc.CV_HOUGH_GRADIENT, 1, srcCoinsGray.rows() / 8, 200, 100, 0, 0)
 
-    var x:Int=0
+    var x: Int = 0
     /// Draw the circles detected
-    for (x<-0 until circles.cols() ){
-      var vCircle=circles.get(0,x)
-      var center:Point=new Point(Math.round(vCircle(0)),Math.round(vCircle(1)))
-      var ratio=Math.round(vCircle(2)).toInt
+    for (x <- 0 until circles.cols()) {
+      var vCircle = circles.get(0, x)
+      var center: Point = new Point(Math.round(vCircle(0)), Math.round(vCircle(1)))
+      var ratio = Math.round(vCircle(2)).toInt
       //draw the found circle
-      org.opencv.imgproc.Imgproc.circle(srcCoins,center,ratio,new Scalar(0,255,255),3)
+      org.opencv.imgproc.Imgproc.circle(srcCoins, center, ratio, new Scalar(0, 255, 255), 3)
 
     }
-    Imgcodecs.imwrite("HoughCoins.png",srcCoins)
+    Imgcodecs.imwrite("HoughCoins.png", srcCoins)
 
   }
-
-
 }
 
 object MyHomography{
