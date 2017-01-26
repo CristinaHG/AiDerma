@@ -44,7 +44,8 @@ class homography {
 
     val imgSrc: Mat = Imgcodecs.imread(file1)
     val imgDst: Mat = Imgcodecs.imread(file2)
-
+    var DstCop=new Mat
+    imgDst.copyTo(DstCop)
     val imgSrcCopy: Mat = Imgcodecs.imread(file1, Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
     val imgDstCopy: Mat = Imgcodecs.imread(file2, Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
 
@@ -125,6 +126,7 @@ class homography {
 
     dst.fromList(pointsIm2.asJava)
     src.fromList(pointsIm1.asJava)
+
 
 
     var h: Mat = Calib3d.findHomography(src, dst, org.opencv.calib3d.Calib3d.RANSAC, 10)
@@ -229,21 +231,15 @@ class homography {
     Imgcodecs.imwrite("byn.png", diff)
 
 
-    //keypoints
-
-    //load new images
-    //var mole1:Mat=Imgcodecs.imread("croppedHomo.png",Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
-    //var mole2:Mat=Imgcodecs.imread("croppedOrig.png",Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
-
-    //Imgcodecs.imwrite("gray.png",mole1)
+    // getting keypoints
 
     var kp1: MatOfKeyPoint = new MatOfKeyPoint()
     var kp2: MatOfKeyPoint = new MatOfKeyPoint()
     var descriptors1: Mat = new Mat()
     var descriptors2: Mat = new Mat()
 
-    var detector: FeatureDetector = FeatureDetector.create(FeatureDetector.ORB)
-    var extractor: DescriptorExtractor = DescriptorExtractor.create(DescriptorExtractor.ORB)
+    var detector: FeatureDetector = FeatureDetector.create(FeatureDetector.BRISK)
+    var extractor: DescriptorExtractor = DescriptorExtractor.create(DescriptorExtractor.BRISK)
 
     Imgcodecs.imwrite("srcCopy.png", imgSrcCopy)
     Imgcodecs.imwrite("dstCopy.png", imgDstCopy)
@@ -257,13 +253,12 @@ class homography {
     var matcher: org.opencv.features2d.DescriptorMatcher = DescriptorMatcher.create(DescriptorMatcher.FLANNBASED)
 
     var matches: MatOfDMatch = new MatOfDMatch()
-    print("d1 size=" + descriptors1.size())
-    print("d2 size=" + descriptors2.size())
 
     if (descriptors1.`type`() != CvType.CV_32F) descriptors1.convertTo(descriptors1, CvType.CV_32F)
     if (descriptors2.`type`() != CvType.CV_32F) descriptors2.convertTo(descriptors2, CvType.CV_32F)
     matcher.`match`(descriptors1, descriptors2, matches)
 
+    //filtering best matches
     var bestMatches: MatOfDMatch = new MatOfDMatch()
     var matchesCopy = matches
     var ordered = matches.toArray.sortWith(_.distance < _.distance).take(7)
@@ -272,57 +267,54 @@ class homography {
       bestMatches.push_back(matchesCopy.row(indexInMatches))
     })
 
-
-    //geting pixels from pdescriptors matches
-    var pointsIm1best = List[Point]()
-    var pointsIm2best = List[Point]()
-
-
-    bestMatches.toArray.foreach(f => {
-      var p1 = new Point(BigDecimal(kp1.get(f.queryIdx, 0) {
-        0
-      }).setScale(2,BigDecimal.RoundingMode.HALF_UP).toDouble, BigDecimal(kp1.get(f.queryIdx, 0) {
-        1
-      }).setScale(2,BigDecimal.RoundingMode.HALF_UP).toDouble)
-      var p2 = new Point(BigDecimal(kp1.get(f.trainIdx, 0) {
-        0
-      }).setScale(2,BigDecimal.RoundingMode.HALF_UP).toDouble, BigDecimal(kp1.get(f.trainIdx, 0) {
-        1
-      }).setScale(2,BigDecimal.RoundingMode.HALF_UP).toDouble)
-      pointsIm1best = (p1) :: pointsIm1best
-      pointsIm2best = (p2) :: pointsIm2best
-    })
-
-
     var outputIMG: Mat = new Mat()
     var drawnMatches: MatOfByte = new MatOfByte()
     org.opencv.features2d.Features2d.drawMatches(imgSrcCopy, kp1, imgDstCopy, kp2, bestMatches, outputIMG, new Scalar(255, 0, 0), new Scalar(0, 255, 0), drawnMatches, org.opencv.features2d.Features2d.NOT_DRAW_SINGLE_POINTS)
 
     Imgcodecs.imwrite("matchesFAST_BRISKReduced.png", outputIMG)
 
-    //hough circle transformation
-    var srcCoins = new Mat()
-    var srcCoinsGray = new Mat()
 
-    srcCoins = org.opencv.imgcodecs.Imgcodecs.imread("/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/coins.jpg")
-    org.opencv.imgproc.Imgproc.cvtColor(srcCoins, srcCoinsGray, org.opencv.imgproc.Imgproc.COLOR_RGB2GRAY)
-    //reduce the noise
-    org.opencv.imgproc.Imgproc.GaussianBlur(srcCoinsGray, srcCoinsGray, new Size(9, 9), 2, 2)
-    //Imgcodecs.imwrite("blurred.png",srcCoinsGray)
-    var circles = new Mat()
-    org.opencv.imgproc.Imgproc.HoughCircles(srcCoinsGray, circles, org.opencv.imgproc.Imgproc.CV_HOUGH_GRADIENT, 1, srcCoinsGray.rows() / 8, 200, 100, 0, 0)
 
-    var x: Int = 0
-    /// Draw the circles detected
-    for (x <- 0 until circles.cols()) {
-      var vCircle = circles.get(0, x)
-      var center: Point = new Point(Math.round(vCircle(0)), Math.round(vCircle(1)))
-      var ratio = Math.round(vCircle(2)).toInt
-      //draw the found circle
-      org.opencv.imgproc.Imgproc.circle(srcCoins, center, ratio, new Scalar(0, 255, 255), 3)
+    //geting pixels from descriptors matches
+    var pointsIm1best = List[Point]()
+    var pointsIm2best = List[Point]()
 
-    }
-    Imgcodecs.imwrite("HoughCoins.png", srcCoins)
+
+    bestMatches.toArray.foreach(f => {
+      var p1 = new Point(kp1.get(f.queryIdx, 0){0}.round,kp1.get(f.queryIdx, 0){1}.round)
+
+      var p2 = new Point(kp2.get(f.trainIdx, 0){0}.round,kp2.get(f.trainIdx, 0){1}.round)
+
+      pointsIm1best = (p1) :: pointsIm1best
+      pointsIm2best = (p2) :: pointsIm2best
+    })
+
+
+
+    var color=Array(255,255,255)
+
+    //var pix=imgSrc.get(0,0)
+
+    pointsIm1.foreach(f=>org.opencv.imgproc.Imgproc.rectangle( outputIMG,f,f,new Scalar(0,255,0)))
+   // pointsIm2.foreach(f=>org.opencv.imgproc.Imgproc.rectangle(imgDst,f,f,new Scalar(0,255,0)))
+
+    Imgcodecs.imwrite("srcMatchedPixels.png",  outputIMG)
+    //Imgcodecs.imwrite("DstMatchedPixels.png", imgDst)
+
+    var dstMat: MatOfPoint2f = new MatOfPoint2f()
+    var srcMat: MatOfPoint2f = new MatOfPoint2f()
+
+    dstMat.fromList(pointsIm2best.asJava)
+    srcMat.fromList(pointsIm1best.asJava)
+
+
+    var h1: Mat = Calib3d.findHomography(srcMat, dstMat, org.opencv.calib3d.Calib3d.RANSAC, 10)
+
+    var Output1: Mat = new Mat()
+    Imgproc.warpPerspective(imgSrc, Output1, h1, imgSrc.size())
+
+    Imgcodecs.imwrite("homographyMatches.png", Output1)
+
 
   }
 }
