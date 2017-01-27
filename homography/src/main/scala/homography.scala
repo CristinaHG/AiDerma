@@ -39,7 +39,7 @@ class homography {
 
     //mole1
     val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole1.jpeg"
-    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/429721776_20725_biggerAlpha.jpg"
+    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/429721776_20725_bigger.jpg"
 
 
     val imgSrc: Mat = Imgcodecs.imread(file1)
@@ -238,8 +238,8 @@ class homography {
     var descriptors1: Mat = new Mat()
     var descriptors2: Mat = new Mat()
 
-    var detector: FeatureDetector = FeatureDetector.create(FeatureDetector.BRISK)
-    var extractor: DescriptorExtractor = DescriptorExtractor.create(DescriptorExtractor.BRISK)
+    var detector: FeatureDetector = FeatureDetector.create(FeatureDetector.ORB)
+    var extractor: DescriptorExtractor = DescriptorExtractor.create(DescriptorExtractor.ORB)
 
     Imgcodecs.imwrite("srcCopy.png", imgSrcCopy)
     Imgcodecs.imwrite("dstCopy.png", imgDstCopy)
@@ -271,7 +271,7 @@ class homography {
     var drawnMatches: MatOfByte = new MatOfByte()
     org.opencv.features2d.Features2d.drawMatches(imgSrcCopy, kp1, imgDstCopy, kp2, bestMatches, outputIMG, new Scalar(255, 0, 0), new Scalar(0, 255, 0), drawnMatches, org.opencv.features2d.Features2d.NOT_DRAW_SINGLE_POINTS)
 
-    Imgcodecs.imwrite("matchesFAST_BRISKReduced.png", outputIMG)
+    Imgcodecs.imwrite("matchesFAST_ORBReduced.png", outputIMG)
 
 
 
@@ -279,46 +279,39 @@ class homography {
     var pointsIm1best = List[Point]()
     var pointsIm2best = List[Point]()
 
+    var lp1= Array[Point]()
+    var lp2= Array[Point]()
+    var prevKP=kp1.toArray
+    var actKP=kp2.toArray
 
     bestMatches.toArray.foreach(f => {
-      var p1 = new Point(kp1.get(f.queryIdx, 0){0}.round,kp1.get(f.queryIdx, 0){1}.round)
 
-      var p2 = new Point(kp2.get(f.trainIdx, 0){0}.round,kp2.get(f.trainIdx, 0){1}.round)
-
-      pointsIm1best = (p1) :: pointsIm1best
-      pointsIm2best = (p2) :: pointsIm2best
+      lp1:+ prevKP{f.trainIdx}.pt
+      lp2:+ actKP{f.queryIdx}.pt
+      org.opencv.imgproc.Imgproc.circle(imgSrc,prevKP{f.queryIdx}.pt,1,new Scalar(0,255,0))
+      org.opencv.imgproc.Imgproc.circle(DstCop ,actKP{f.trainIdx}.pt,1,new Scalar(0,255,0))
     })
 
 
 
-    var color=Array(255,255,255)
+    Imgcodecs.imwrite("srcMatchedPixels.png", imgSrc)
+    Imgcodecs.imwrite("DstMatchedPixels.png", DstCop)
 
-    //var pix=imgSrc.get(0,0)
-
-    pointsIm1.foreach(f=>org.opencv.imgproc.Imgproc.rectangle( outputIMG,f,f,new Scalar(0,255,0)))
-   // pointsIm2.foreach(f=>org.opencv.imgproc.Imgproc.rectangle(imgDst,f,f,new Scalar(0,255,0)))
-
-    Imgcodecs.imwrite("srcMatchedPixels.png",  outputIMG)
-    //Imgcodecs.imwrite("DstMatchedPixels.png", imgDst)
-
-    var dstMat: MatOfPoint2f = new MatOfPoint2f()
-    var srcMat: MatOfPoint2f = new MatOfPoint2f()
-
-    dstMat.fromList(pointsIm2best.asJava)
-    srcMat.fromList(pointsIm1best.asJava)
-
-
-    var h1: Mat = Calib3d.findHomography(srcMat, dstMat, org.opencv.calib3d.Calib3d.RANSAC, 10)
-
-    var Output1: Mat = new Mat()
-    Imgproc.warpPerspective(imgSrc, Output1, h1, imgSrc.size())
-
-    Imgcodecs.imwrite("homographyMatches.png", Output1)
-
+//    var dstMat: MatOfPoint2f = new MatOfPoint2f()
+//    var srcMat: MatOfPoint2f = new MatOfPoint2f()
+//
+//    dstMat.fromList(lp1.toList.asJava)
+//    srcMat.fromList(lp2.toList.asJava)
+//
+//    var h1: Mat = Calib3d.findHomography(srcMat, dstMat, org.opencv.calib3d.Calib3d.RANSAC, 10)
+//
+//    var Output1: Mat = new Mat()
+//    Imgproc.warpPerspective(imgSrc, Output1, h1, imgSrc.size())
+//
+//    Imgcodecs.imwrite("homographyMatches.png", Output1)
 
   }
 }
-
 object MyHomography{
 
   def main(args: Array[String]): Unit
@@ -329,3 +322,6 @@ object MyHomography{
     h1.run
   }
 }
+
+
+
