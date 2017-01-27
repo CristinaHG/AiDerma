@@ -88,12 +88,45 @@ class homography {
     */
 
     //mole1
-    var p11 = new Point(20, 111)
-    var p12 = new Point(213, 20)
-    var p13 = new Point(309, 30)
-    var p14 = new Point(414, 113)
-    var p15 = new Point(381, 181)
-    var p16 = new Point(133, 144)
+//    var p11 = new Point(20, 111)
+//    var p12 = new Point(213, 20)
+//    var p13 = new Point(309, 30)
+//    var p14 = new Point(414, 113)
+//    var p15 = new Point(381, 181)
+//    var p16 = new Point(133, 144)
+//
+//    pointsIm1 = (p11) :: pointsIm1
+//    pointsIm1 = (p12) :: pointsIm1
+//    pointsIm1 = (p13) :: pointsIm1
+//    pointsIm1 = (p14) :: pointsIm1
+//    pointsIm1 = (p15) :: pointsIm1
+//    pointsIm1 = (p16) :: pointsIm1
+//    pointsIm1 = pointsIm1.reverse
+//
+//
+//    //mole1
+//    var p21 = new Point(20, 112)
+//    var p22 = new Point(212, 20)
+//    var p23 = new Point(309, 32)
+//    var p24 = new Point(415, 115)
+//    var p25 = new Point(381, 181)
+//    var p26 = new Point(136, 141)
+//
+//    pointsIm2 = (p21) :: pointsIm2
+//    pointsIm2 = (p22) :: pointsIm2
+//    pointsIm2 = (p23) :: pointsIm2
+//    pointsIm2 = (p24) :: pointsIm2
+//    pointsIm2 = (p25) :: pointsIm2
+//    pointsIm2 = (p26) :: pointsIm2
+//    pointsIm2 = pointsIm2.reverse
+
+    var p11 = new Point(52,102)
+    var p12 = new Point(210,152)
+    var p13 = new Point(309,111)
+    var p14 = new Point(383,77)
+    var p15 = new Point(408,101)
+    var p16 = new Point(389,117)
+    var p17= new Point(384,131)
 
     pointsIm1 = (p11) :: pointsIm1
     pointsIm1 = (p12) :: pointsIm1
@@ -105,12 +138,12 @@ class homography {
 
 
     //mole1
-    var p21 = new Point(20, 112)
-    var p22 = new Point(212, 20)
-    var p23 = new Point(309, 32)
-    var p24 = new Point(415, 115)
-    var p25 = new Point(381, 181)
-    var p26 = new Point(136, 141)
+    var p21 = new Point(52,102)
+    var p22 = new Point(211,153)
+    var p23 = new Point(310,111)
+    var p24 = new Point(383,76)
+    var p25 = new Point(407,101)
+    var p26 = new Point(389,118)
 
     pointsIm2 = (p21) :: pointsIm2
     pointsIm2 = (p22) :: pointsIm2
@@ -129,7 +162,7 @@ class homography {
 
 
 
-    var h: Mat = Calib3d.findHomography(src, dst, org.opencv.calib3d.Calib3d.RANSAC, 10)
+    var h: Mat = Calib3d.findHomography(dst, src, org.opencv.calib3d.Calib3d.RANSAC, 10)
 
     var Output: Mat = new Mat()
     Imgproc.warpPerspective(imgSrc, Output, h, imgSrc.size())
@@ -151,85 +184,50 @@ class homography {
     Imgcodecs.imwrite("croppedOrig.png", roiImgOrig)
 
 
-    //load new images
-    var mole1: Mat = Imgcodecs.imread("croppedHomo.png", Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
-    var mole2: Mat = Imgcodecs.imread("croppedOrig.png", Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
-
-
-    var diff: Mat = new Mat()
-    //org.opencv.core.Core.absdiff(mole1,mole2, diff)
-    //Imgcodecs.imwrite("byn.png", diff)
-    //var withThreshold1:Mat=new Mat()
-    //var withThreshold2:Mat=new Mat()
-    //var withThreshold:Mat=new Mat()
-    //org.opencv.imgproc.Imgproc.threshold(mole1,withThreshold1,150,255,org.opencv.imgproc.Imgproc.THRESH_TRUNC)
-    //org.opencv.imgproc.Imgproc.threshold(mole2,withThreshold2,150,255,org.opencv.imgproc.Imgproc.THRESH_TRUNC)
-    //    var withThreshold1Adap:Mat=new Mat()
-    //    var withThreshold2Adap:Mat=new Mat()
-    //    org.opencv.imgproc.Imgproc.adaptiveThreshold(mole1,withThreshold1Adap,255, org.opencv.imgproc.Imgproc.ADAPTIVE_THRESH_MEAN_C,org.opencv.imgproc.Imgproc.THRESH_BINARY,
-    //      11,2)
-    //    org.opencv.imgproc.Imgproc.adaptiveThreshold(mole2,withThreshold2Adap,255,org.opencv.imgproc.Imgproc.ADAPTIVE_THRESH_MEAN_C,org.opencv.imgproc.Imgproc.THRESH_BINARY,
-    //      11,2)
-    //
-    //    Imgcodecs.imwrite("mole1ThersholdAdaptative.png",withThreshold1Adap)
-    //    Imgcodecs.imwrite("mole2ThersholdAdaptative.png",withThreshold2Adap)
-
-    //Imgcodecs.imwrite("mole1Thershold.png",withThreshold1)
-    //Imgcodecs.imwrite("mole2Thershold.png",withThreshold2)
-
-    //finding contours
-    var Binarized1: Mat = new Mat()
-    var Binarized2: Mat = new Mat()
-    var contours1 = new util.ArrayList[MatOfPoint]()
-    var contours2 = new util.ArrayList[MatOfPoint]()
-    //copmute thresholds
-    org.opencv.imgproc.Imgproc.threshold(mole1, Binarized1, 0, 255, org.opencv.imgproc.Imgproc.THRESH_BINARY_INV + org.opencv.imgproc.Imgproc.THRESH_OTSU)
-    org.opencv.imgproc.Imgproc.threshold(mole2, Binarized2, 0, 255, org.opencv.imgproc.Imgproc.THRESH_BINARY_INV + org.opencv.imgproc.Imgproc.THRESH_OTSU)
-    //compute contours
-    org.opencv.imgproc.Imgproc.findContours(Binarized1, contours1, new Mat(), org.opencv.imgproc.Imgproc.RETR_EXTERNAL, org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
-    org.opencv.imgproc.Imgproc.findContours(Binarized2, contours2, new Mat(), org.opencv.imgproc.Imgproc.RETR_EXTERNAL, org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
-    Imgcodecs.imwrite("shape1.png", Binarized1)
-    Imgcodecs.imwrite("shape2.png", Binarized2)
-    var cnt1 = contours1.get(0)
-    var cnt2 = contours2.get(0)
-    print("matching shapes=" + org.opencv.imgproc.Imgproc.matchShapes(cnt1, cnt2, org.opencv.imgproc.Imgproc.CV_CONTOURS_MATCH_I1, 0))
-    //draw polylines
-    Binarized1.setTo(new Scalar(0))
-    Binarized2.setTo(new Scalar(0))
-    var newBinarized1: Mat = new Mat()
-    var newBinarized2: Mat = new Mat()
-    org.opencv.imgproc.Imgproc.cvtColor(Binarized1, newBinarized1, org.opencv.imgproc.Imgproc.COLOR_GRAY2RGB)
-    org.opencv.imgproc.Imgproc.cvtColor(Binarized2, newBinarized2, org.opencv.imgproc.Imgproc.COLOR_GRAY2RGB)
-    org.opencv.imgproc.Imgproc.polylines(newBinarized1, contours1, true, new Scalar(0, 255, 0))
-    org.opencv.imgproc.Imgproc.polylines(newBinarized2, contours2, true, new Scalar(0, 0, 255))
-
-    org.opencv.imgproc.Imgproc.polylines(roiImg, contours1, true, new Scalar(0, 255, 0))
-    org.opencv.imgproc.Imgproc.polylines(roiImgOrig, contours2, true, new Scalar(0, 0, 255))
-
-
-    Imgcodecs.imwrite("binarized1.png", roiImg)
-    Imgcodecs.imwrite("binarized2.png", roiImgOrig)
-    /*
-    print(roiImg.channels())
-    var transparent:Mat=new Mat(roiImg.size(),org.opencv.core.CvType.CV_8UC4)
-    var alphaChannel:Mat=new Mat(roiImg.size(),org.opencv.core.CvType.CV_8UC1)
-
-    alphaChannel.setTo(new Scalar(0.5))
-    var rgb=new util.ArrayList[Mat]()
-    rgb.add(alphaChannel)
-   // print(rgb.size())
-    org.opencv.core.Core.split(roiImg,rgb)
-    org.opencv.core.Core.merge(rgb,transparent)
-
-    //roiImg.convertTo(transparent,org.opencv.imgproc.Imgproc.COLOR_RGB2RGBA)
-    //org.opencv.imgproc.Imgproc.cvtColor(roiImg,transparent,org.opencv.imgproc.Imgproc.COLOR_RGB2RGBA)
-
-
-    Imgcodecs.imwrite("binarized1.png",transparent)
-    */
-    org.opencv.core.Core.absdiff(newBinarized1, newBinarized2, diff)
-    Imgcodecs.imwrite("byn.png", diff)
-
+//    //load new images
+//    var mole1: Mat = Imgcodecs.imread("croppedHomo.png", Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
+//    var mole2: Mat = Imgcodecs.imread("croppedOrig.png", Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
+//
+//
+//    var diff: Mat = new Mat()
+//
+//
+//    //finding contours
+//    var Binarized1: Mat = new Mat()
+//    var Binarized2: Mat = new Mat()
+//    var contours1 = new util.ArrayList[MatOfPoint]()
+//    var contours2 = new util.ArrayList[MatOfPoint]()
+//    //copmute thresholds
+//    org.opencv.imgproc.Imgproc.threshold(mole1, Binarized1, 0, 255, org.opencv.imgproc.Imgproc.THRESH_BINARY_INV + org.opencv.imgproc.Imgproc.THRESH_OTSU)
+//    org.opencv.imgproc.Imgproc.threshold(mole2, Binarized2, 0, 255, org.opencv.imgproc.Imgproc.THRESH_BINARY_INV + org.opencv.imgproc.Imgproc.THRESH_OTSU)
+//    //compute contours
+//    org.opencv.imgproc.Imgproc.findContours(Binarized1, contours1, new Mat(), org.opencv.imgproc.Imgproc.RETR_EXTERNAL, org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
+//    org.opencv.imgproc.Imgproc.findContours(Binarized2, contours2, new Mat(), org.opencv.imgproc.Imgproc.RETR_EXTERNAL, org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
+//    Imgcodecs.imwrite("shape1.png", Binarized1)
+//    Imgcodecs.imwrite("shape2.png", Binarized2)
+//    var cnt1 = contours1.get(0)
+//    var cnt2 = contours2.get(0)
+//    print("matching shapes=" + org.opencv.imgproc.Imgproc.matchShapes(cnt1, cnt2, org.opencv.imgproc.Imgproc.CV_CONTOURS_MATCH_I1, 0))
+//    //draw polylines
+//    Binarized1.setTo(new Scalar(0))
+//    Binarized2.setTo(new Scalar(0))
+//    var newBinarized1: Mat = new Mat()
+//    var newBinarized2: Mat = new Mat()
+//    org.opencv.imgproc.Imgproc.cvtColor(Binarized1, newBinarized1, org.opencv.imgproc.Imgproc.COLOR_GRAY2RGB)
+//    org.opencv.imgproc.Imgproc.cvtColor(Binarized2, newBinarized2, org.opencv.imgproc.Imgproc.COLOR_GRAY2RGB)
+//    org.opencv.imgproc.Imgproc.polylines(newBinarized1, contours1, true, new Scalar(0, 255, 0))
+//    org.opencv.imgproc.Imgproc.polylines(newBinarized2, contours2, true, new Scalar(0, 0, 255))
+//
+//    org.opencv.imgproc.Imgproc.polylines(roiImg, contours1, true, new Scalar(0, 255, 0))
+//    org.opencv.imgproc.Imgproc.polylines(roiImgOrig, contours2, true, new Scalar(0, 0, 255))
+//
+//
+//    Imgcodecs.imwrite("binarized1.png", roiImg)
+//    Imgcodecs.imwrite("binarized2.png", roiImgOrig)
+//
+//    org.opencv.core.Core.absdiff(newBinarized1, newBinarized2, diff)
+//    Imgcodecs.imwrite("byn.png", diff)
+//
 
     // getting keypoints
 
@@ -276,39 +274,43 @@ class homography {
 
 
     //geting pixels from descriptors matches
-    var pointsIm1best = List[Point]()
-    var pointsIm2best = List[Point]()
 
-    var lp1= Array[Point]()
-    var lp2= Array[Point]()
-    var prevKP=kp1.toArray
-    var actKP=kp2.toArray
+    var lp1= List[Point]()
+    var lp2= List[Point]()
+    var prevKP=kp1.toList
+    var actKP=kp2.toList
+    var copySRC=new Mat()
+    imgSrc.copyTo(copySRC)
 
     bestMatches.toArray.foreach(f => {
 
-      lp1:+ prevKP{f.trainIdx}.pt
-      lp2:+ actKP{f.queryIdx}.pt
-      org.opencv.imgproc.Imgproc.circle(imgSrc,prevKP{f.queryIdx}.pt,1,new Scalar(0,255,0))
-      org.opencv.imgproc.Imgproc.circle(DstCop ,actKP{f.trainIdx}.pt,1,new Scalar(0,255,0))
-    })
+      lp1=lp1:+ prevKP.get(f.queryIdx).pt
+      lp2= lp2:+ actKP.get(f.trainIdx).pt
+      org.opencv.imgproc.Imgproc.circle(imgSrc,prevKP.get(f.queryIdx).pt,1,new Scalar(0,255,0))
+  //    print("kp1"+prevKP.get(f.queryIdx).pt + "\n")
+      org.opencv.imgproc.Imgproc.circle(DstCop ,actKP.get(f.trainIdx).pt,1,new Scalar(0,255,0))
+   //   print("kp2"+actKP.get(f.queryIdx).pt+ "\n")
+//            org.opencv.imgproc.Imgproc.rectangle(imgSrc,prevKP{f.queryIdx}.pt,prevKP{f.queryIdx}.pt,new Scalar(0,255,0))
+//            org.opencv.imgproc.Imgproc.rectangle(DstCop ,actKP{f.trainIdx}.pt,actKP{f.trainIdx}.pt,new Scalar(0,255,0))
 
+    })
 
 
     Imgcodecs.imwrite("srcMatchedPixels.png", imgSrc)
     Imgcodecs.imwrite("DstMatchedPixels.png", DstCop)
 
-//    var dstMat: MatOfPoint2f = new MatOfPoint2f()
-//    var srcMat: MatOfPoint2f = new MatOfPoint2f()
-//
-//    dstMat.fromList(lp1.toList.asJava)
-//    srcMat.fromList(lp2.toList.asJava)
-//
-//    var h1: Mat = Calib3d.findHomography(srcMat, dstMat, org.opencv.calib3d.Calib3d.RANSAC, 10)
-//
-//    var Output1: Mat = new Mat()
-//    Imgproc.warpPerspective(imgSrc, Output1, h1, imgSrc.size())
-//
-//    Imgcodecs.imwrite("homographyMatches.png", Output1)
+    var dstMat: MatOfPoint2f = new MatOfPoint2f()
+    var srcMat: MatOfPoint2f = new MatOfPoint2f()
+
+    dstMat.fromList(lp1.asJava)
+    srcMat.fromList(lp2.asJava)
+
+    var h1: Mat = Calib3d.findHomography(srcMat,dstMat, org.opencv.calib3d.Calib3d.RANSAC, 10)
+
+    var Output1: Mat = new Mat()
+    Imgproc.warpPerspective(copySRC, Output1, h1, copySRC.size())
+
+    Imgcodecs.imwrite("homographyMatches.png", Output1)
 
   }
 }
