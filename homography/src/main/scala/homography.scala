@@ -308,6 +308,8 @@ class homography {
     var h1: Mat = Calib3d.findHomography(srcMat,dstMat, org.opencv.calib3d.Calib3d.RANSAC, 10)
 
     var Output1: Mat = new Mat()
+    Imgcodecs.imwrite("SRCOPY.png",copySRC)
+
     Imgproc.warpPerspective(copySRC, Output1, h1, copySRC.size())
 
     Imgcodecs.imwrite("homographyMatches.png", Output1)
