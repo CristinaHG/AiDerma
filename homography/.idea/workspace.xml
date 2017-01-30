@@ -24,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="homography.scala" pinned="false" current-in-tab="true">
+      <file leaf-file-name="homography.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/homography.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="296" column="0" lean-forward="true" selection-start-line="296" selection-start-column="0" selection-end-line="296" selection-end-column="0" />
+            <state relative-caret-position="440">
+              <caret line="242" column="48" lean-forward="true" selection-start-line="242" selection-start-column="48" selection-end-line="242" selection-end-column="48" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#43#62#0" expanded="true" />
@@ -44,8 +44,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="img1.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/img1.png">
+      <file leaf-file-name="compare.scala" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/compare.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="333">
+              <caret line="140" column="48" lean-forward="true" selection-start-line="140" selection-start-column="48" selection-end-line="140" selection-end-column="48" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#85#104#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="croppedHomo.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/croppedHomo.png">
           <provider selected="true" editor-type-id="images">
             <state />
           </provider>
@@ -58,16 +71,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="compare.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/compare.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="196" column="4" lean-forward="false" selection-start-line="196" selection-start-column="4" selection-end-line="196" selection-end-column="4" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="e#85#104#0" expanded="true" />
-              </folding>
-            </state>
+      <file leaf-file-name="croppedOrig.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/croppedOrig.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
@@ -80,13 +87,6 @@
       </file>
       <file leaf-file-name="homographyMatches.png" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/homographyMatches.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DstMatchedPixels.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DstMatchedPixels.png">
           <provider selected="true" editor-type-id="images">
             <state />
           </provider>
@@ -1137,12 +1137,12 @@
       <workItem from="1485420957116" duration="13221000" />
       <workItem from="1485508316026" duration="10035000" />
       <workItem from="1485522541328" duration="1439000" />
-      <workItem from="1485765727816" duration="4882000" />
+      <workItem from="1485765727816" duration="7228000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="154143000" />
+    <option name="totallyTimeSpent" value="156489000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1365" y="0" width="1282" height="1024" extended-state="6" />
@@ -1197,12 +1197,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="scala-line">
           <url>file://$PROJECT_DIR$/src/main/scala/compare.scala</url>
-          <line>119</line>
+          <line>140</line>
           <properties />
-          <option name="timeStamp" value="39" />
+          <option name="timeStamp" value="43" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="40" />
+      <option name="time" value="44" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -1443,32 +1443,12 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/croppedHomo.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/croppedOrig.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dstCopy.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DstMatchedPixels.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/img1.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/matchesFAST_ORBReduced.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -1483,34 +1463,54 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/homographyMatches.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matchesFAST_ORBReduced.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/srcMatchedPixels.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/compare.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="196" column="4" lean-forward="false" selection-start-line="196" selection-start-column="4" selection-end-line="196" selection-end-column="4" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#85#104#0" expanded="true" />
-          </folding>
-        </state>
+    <entry file="file://$PROJECT_DIR$/dstCopy.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/homographyMatches.png">
+    <entry file="file://$PROJECT_DIR$/croppedHomo.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/croppedOrig.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/homography.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="296" column="0" lean-forward="true" selection-start-line="296" selection-start-column="0" selection-end-line="296" selection-end-column="0" />
+        <state relative-caret-position="440">
+          <caret line="242" column="48" lean-forward="true" selection-start-line="242" selection-start-column="48" selection-end-line="242" selection-end-column="48" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#43#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/compare.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="140" column="48" lean-forward="true" selection-start-line="140" selection-start-column="48" selection-end-line="140" selection-end-column="48" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#85#104#0" expanded="true" />
           </folding>
         </state>
       </provider>

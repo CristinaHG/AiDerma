@@ -34,15 +34,15 @@ class compare {
 
   def run = {
 
-    /*
-    //mole2
-    val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole2.jpeg"
-    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/425806267_118435_bigger_rotated.jpg"
-    */
 
-    //mole1
-    val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole1.jpeg"
-    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/429721776_20725_bigger.jpg"
+    //mole2
+    val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole2cropped.jpeg"
+    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/425806267_118435_bigger_rotatedcropped.jpg"
+
+
+//    //mole1
+//    val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole1.jpeg"
+//    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/429721776_20725_bigger.jpg"
 
 
     val imgSrc: Mat = Imgcodecs.imread(file1)
@@ -131,58 +131,58 @@ class compare {
     Imgcodecs.imwrite("homographyMatches.png", Output)
 
 
-//    //crop images to compare
-//    var cropped = new Mat()
-//    //var rect: Rect = new Rect(Output.cols() / 2 - 125, Output.rows() / 2 - 125, 200, 200) //mole2
-//    var rect: Rect = new Rect(Output.cols() / 2 - 235, Output.rows() / 2 - 124, 450, 243)
-//    //mole1
-//    var roiImg = Output.submat(rect)
-//    var roiImgOrig = imgDst.submat(rect)
-//    Imgcodecs.imwrite("croppedHomo.png", roiImg)
-//    Imgcodecs.imwrite("croppedOrig.png", roiImgOrig)
-//
-//
-//    //load new images
-//    var mole1: Mat = Imgcodecs.imread("croppedHomo.png", Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
-//    var mole2: Mat = Imgcodecs.imread("croppedOrig.png", Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
-//
-//    //finding contours
-//    var diff: Mat = new Mat()
-//    var Binarized1: Mat = new Mat()
-//    var Binarized2: Mat = new Mat()
-//    var contours1 = new util.ArrayList[MatOfPoint]()
-//    var contours2 = new util.ArrayList[MatOfPoint]()
-//
-//    //compute thresholds
-//    org.opencv.imgproc.Imgproc.threshold(mole1, Binarized1, 0, 255, org.opencv.imgproc.Imgproc.THRESH_BINARY_INV + org.opencv.imgproc.Imgproc.THRESH_OTSU)
-//    org.opencv.imgproc.Imgproc.threshold(mole2, Binarized2, 0, 255, org.opencv.imgproc.Imgproc.THRESH_BINARY_INV + org.opencv.imgproc.Imgproc.THRESH_OTSU)
-//    //compute contours
-//    org.opencv.imgproc.Imgproc.findContours(Binarized1, contours1, new Mat(), org.opencv.imgproc.Imgproc.RETR_EXTERNAL, org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
-//    org.opencv.imgproc.Imgproc.findContours(Binarized2, contours2, new Mat(), org.opencv.imgproc.Imgproc.RETR_EXTERNAL, org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
-//    Imgcodecs.imwrite("shape1.png", Binarized1)
-//    Imgcodecs.imwrite("shape2.png", Binarized2)
-//    var cnt1 = contours1.get(0)
-//    var cnt2 = contours2.get(0)
-//    print("matching shapes=" + org.opencv.imgproc.Imgproc.matchShapes(cnt1, cnt2, org.opencv.imgproc.Imgproc.CV_CONTOURS_MATCH_I1, 0))
-//    //draw polylines
-//    Binarized1.setTo(new Scalar(0))
-//    Binarized2.setTo(new Scalar(0))
-//    var newBinarized1: Mat = new Mat()
-//    var newBinarized2: Mat = new Mat()
-//    org.opencv.imgproc.Imgproc.cvtColor(Binarized1, newBinarized1, org.opencv.imgproc.Imgproc.COLOR_GRAY2RGB)
-//    org.opencv.imgproc.Imgproc.cvtColor(Binarized2, newBinarized2, org.opencv.imgproc.Imgproc.COLOR_GRAY2RGB)
-//    org.opencv.imgproc.Imgproc.polylines(newBinarized1, contours1, true, new Scalar(0, 255, 0))
-//    org.opencv.imgproc.Imgproc.polylines(newBinarized2, contours2, true, new Scalar(0, 0, 255))
-//
-//    org.opencv.imgproc.Imgproc.polylines(roiImg, contours1, true, new Scalar(0, 255, 0))
-//    org.opencv.imgproc.Imgproc.polylines(roiImgOrig, contours2, true, new Scalar(0, 0, 255))
-//
-//
-//    Imgcodecs.imwrite("binarized1.png", roiImg)
-//    Imgcodecs.imwrite("binarized2.png", roiImgOrig)
-//    //show difference
-//    org.opencv.core.Core.absdiff(newBinarized1, newBinarized2, diff)
-//    Imgcodecs.imwrite("byn.png", diff)
+    //crop images to compare
+    var cropped = new Mat()
+    var rect: Rect = new Rect(Output.cols() / 2 -70, Output.rows() / 2 -70 , 110, 110) //mole2
+    //var rect: Rect = new Rect(Output.cols() / 2 - 235, Output.rows() / 2 - 124, 450, 243) //mole1
+    //mole1
+    var roiImg = Output.submat(rect)
+    var roiImgOrig = imgDst.submat(rect)
+    Imgcodecs.imwrite("croppedHomo.png", roiImg)
+    Imgcodecs.imwrite("croppedOrig.png", roiImgOrig)
+
+
+    //load new images
+    var mole1: Mat = Imgcodecs.imread("croppedHomo.png", Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
+    var mole2: Mat = Imgcodecs.imread("croppedOrig.png", Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
+
+    //finding contours
+    var diff: Mat = new Mat()
+    var Binarized1: Mat = new Mat()
+    var Binarized2: Mat = new Mat()
+    var contours1 = new util.ArrayList[MatOfPoint]()
+    var contours2 = new util.ArrayList[MatOfPoint]()
+
+    //compute thresholds
+    org.opencv.imgproc.Imgproc.threshold(mole1, Binarized1, 0, 255, org.opencv.imgproc.Imgproc.THRESH_BINARY_INV + org.opencv.imgproc.Imgproc.THRESH_OTSU)
+    org.opencv.imgproc.Imgproc.threshold(mole2, Binarized2, 0, 255, org.opencv.imgproc.Imgproc.THRESH_BINARY_INV + org.opencv.imgproc.Imgproc.THRESH_OTSU)
+    //compute contours
+    org.opencv.imgproc.Imgproc.findContours(Binarized1, contours1, new Mat(), org.opencv.imgproc.Imgproc.RETR_EXTERNAL, org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
+    org.opencv.imgproc.Imgproc.findContours(Binarized2, contours2, new Mat(), org.opencv.imgproc.Imgproc.RETR_EXTERNAL, org.opencv.imgproc.Imgproc.CHAIN_APPROX_NONE)
+    Imgcodecs.imwrite("shape1.png", Binarized1)
+    Imgcodecs.imwrite("shape2.png", Binarized2)
+    var cnt1 = contours1.get(0)
+    var cnt2 = contours2.get(0)
+    print("matching shapes=" + org.opencv.imgproc.Imgproc.matchShapes(cnt1, cnt2, org.opencv.imgproc.Imgproc.CV_CONTOURS_MATCH_I1, 0))
+    //draw polylines
+    Binarized1.setTo(new Scalar(0))
+    Binarized2.setTo(new Scalar(0))
+    var newBinarized1: Mat = new Mat()
+    var newBinarized2: Mat = new Mat()
+    org.opencv.imgproc.Imgproc.cvtColor(Binarized1, newBinarized1, org.opencv.imgproc.Imgproc.COLOR_GRAY2RGB)
+    org.opencv.imgproc.Imgproc.cvtColor(Binarized2, newBinarized2, org.opencv.imgproc.Imgproc.COLOR_GRAY2RGB)
+    org.opencv.imgproc.Imgproc.polylines(newBinarized1, contours1, true, new Scalar(0, 255, 0))
+    org.opencv.imgproc.Imgproc.polylines(newBinarized2, contours2, true, new Scalar(0, 0, 255))
+
+    org.opencv.imgproc.Imgproc.polylines(roiImg, contours1, true, new Scalar(0, 255, 0))
+    org.opencv.imgproc.Imgproc.polylines(roiImgOrig, contours2, true, new Scalar(0, 0, 255))
+
+
+    Imgcodecs.imwrite("binarized1.png", roiImg)
+    Imgcodecs.imwrite("binarized2.png", roiImgOrig)
+    //show difference
+    org.opencv.core.Core.absdiff(newBinarized1, newBinarized2, diff)
+    Imgcodecs.imwrite("byn.png", diff)
 
   }
 }
