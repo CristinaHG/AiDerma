@@ -34,10 +34,14 @@ class compare {
 
   def run = {
 
+    //mole3
+    val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole3cropped.jpg"
+    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/429713451_20745_bigger_rotatedcropped.jpg"
 
-    //mole2
-    val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole2cropped.jpeg"
-    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/425806267_118435_bigger_rotatedcropped.jpg"
+
+//    //mole2
+//    val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole2cropped.jpeg"
+//    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/425806267_118435_bigger_rotatedcropped.jpg"
 
 
 //    //mole1
@@ -52,6 +56,8 @@ class compare {
     val imgDstCopy: Mat = Imgcodecs.imread(file2, Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
 
 
+    Imgcodecs.imwrite("srcCopy.png", imgSrcCopy)
+    Imgcodecs.imwrite("dstCopy.png", imgDstCopy)
     // getting  the keypoints
 
     var kp1: MatOfKeyPoint = new MatOfKeyPoint()
@@ -120,24 +126,44 @@ class compare {
     var dstMat: MatOfPoint2f = new MatOfPoint2f()
     var srcMat: MatOfPoint2f = new MatOfPoint2f()
 
-    dstMat.fromList(lp1.asJava)
-    srcMat.fromList(lp2.asJava)
+    dstMat.fromList(lp2.asJava)
+    srcMat.fromList(lp1.asJava)
 
-    var h1: Mat = Calib3d.findHomography(srcMat, dstMat, org.opencv.calib3d.Calib3d.RANSAC, 10)
+    var h1: Mat = Calib3d.findHomography( srcMat,dstMat, org.opencv.calib3d.Calib3d.RANSAC, 10)
 
     var Output: Mat = new Mat()
     Imgproc.warpPerspective(imgSrc, Output, h1, imgSrc.size())
 
     Imgcodecs.imwrite("homographyMatches.png", Output)
 
+    var skinpix=Array(125,168,217)
+    Output.convertTo(Output,CvType.CV_32S)
+    var i:Int=0
+    var j:Int=0
+    for(i<-0 until Output.rows()){
+      for(j<-0 until Output.cols()){
+          if(Output.get(i,j){0}==0 || Output.get(i,j){1}==0 || Output.get(i,j){2}==0 ) Output.put(i,j,skinpix)
+      }
+    }
+
+
+    Imgcodecs.imwrite("homographyMatches.png", Output)
 
     //crop images to compare
     var cropped = new Mat()
-    var rect: Rect = new Rect(Output.cols() / 2 -70, Output.rows() / 2 -70 , 110, 110) //mole2
+
+    //var rect: Rect = new Rect(Output.cols() / 2 -70, Output.rows() / 2 -70 , 110, 110) //mole2
     //var rect: Rect = new Rect(Output.cols() / 2 - 235, Output.rows() / 2 - 124, 450, 243) //mole1
-    //mole1
-    var roiImg = Output.submat(rect)
-    var roiImgOrig = imgDst.submat(rect)
+    //var rect:Rect=new Rect(Output.cols(),Output.rows(),100,100)//mole3
+    var roiImg=new Mat()
+    var roiImgOrig=new Mat()
+
+   Output.copyTo(roiImg)
+    imgDst.copyTo(roiImgOrig)
+
+    //var roiImg = Output.submat(rect)
+    //var roiImgOrig = imgDst.submat(rect)
+
     Imgcodecs.imwrite("croppedHomo.png", roiImg)
     Imgcodecs.imwrite("croppedOrig.png", roiImgOrig)
 
