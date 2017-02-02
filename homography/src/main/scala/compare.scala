@@ -154,7 +154,7 @@ class compare {
 //    Imgcodecs.imwrite("mask.png", mask)
     var computedlines=new Mat()
     org.opencv.imgproc.Imgproc.Canny(grayhomo,computedlines,50,300)
-    Imgcodecs.imwrite("canny.png",computedlines)
+    Imgcodecs.imwrite("cannymask.png",computedlines)
 //    var hoguhl=new Mat()
 //    org.opencv.imgproc.Imgproc.HoughLines(computedlines,hoguhl,1,Math.PI/180,100)
 //
@@ -175,7 +175,7 @@ class compare {
 
     var corrected=new Mat()
     Output.convertTo(Output,CvType.CV_8UC3)
-     org.opencv.photo.Photo.inpaint(Output,computedlines,corrected,10,org.opencv.photo.Photo.INPAINT_TELEA)
+     org.opencv.photo.Photo.inpaint(Output,computedlines,corrected,3,org.opencv.photo.Photo.INPAINT_TELEA)
     Imgcodecs.imwrite("correctingScratches.png",corrected)
     //crop images to compare
     var cropped = new Mat()
@@ -186,7 +186,7 @@ class compare {
     var roiImg=new Mat()
     var roiImgOrig=new Mat()
 
-   Output.copyTo(roiImg)
+  corrected.copyTo(roiImg)
     imgDst.copyTo(roiImgOrig)
 
     //var roiImg = Output.submat(rect)
