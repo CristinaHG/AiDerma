@@ -137,22 +137,23 @@ class compare {
     Imgcodecs.imwrite("homographyMatches.png", Output)
 
     //complete with skin color pixels
-    var skinpix=Array(125,168,217)
-    Output.convertTo(Output,CvType.CV_32S)
-    var i:Int=0
-    var j:Int=0
-    for(i<-0 until Output.rows()){
-      for(j<-0 until Output.cols()){
-          if(Output.get(i,j){0}==0 && Output.get(i,j){1}==0 && Output.get(i,j){2}==0 ) Output.put(i,j,skinpix)
-        Imgcodecs.imwrite("homographyMatchesFilled.png", Output)
-      }
-    }
+//    var skinpix=Array(125,168,217)
+//    Output.convertTo(Output,CvType.CV_32S)
+//    var i:Int=0
+//    var j:Int=0
+//    for(i<-0 until Output.rows()){
+//      for(j<-0 until Output.cols()){
+//          if(Output.get(i,j){0}==0 && Output.get(i,j){1}==0 && Output.get(i,j){2}==0 ) Output.put(i,j,skinpix)
+//        Imgcodecs.imwrite("homographyMatchesFilled.png", Output)
+//      }
+//    }
 
     var grayhomo=Imgcodecs.imread("homographyMatches.png", Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE)
 //    var mask=new Mat()
 //    org.opencv.imgproc.Imgproc.threshold(grayhomo, mask, 0, 255, org.opencv.imgproc.Imgproc.THRESH_BINARY_INV )
 //    Imgcodecs.imwrite("mask.png", mask)
     var computedlines=new Mat()
+    org.opencv.imgproc.Imgproc.GaussianBlur(grayhomo, grayhomo, new Size(9, 9), 2, 2)
     org.opencv.imgproc.Imgproc.Canny(grayhomo,computedlines,50,300)
     Imgcodecs.imwrite("cannymask.png",computedlines)
 //    var hoguhl=new Mat()
