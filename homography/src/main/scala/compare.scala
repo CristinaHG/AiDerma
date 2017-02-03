@@ -35,8 +35,8 @@ class compare {
   def run = {
 
     //mole3
-    val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole3cropped.jpg"
-    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/429713451_20745_bigger_rotatedcropped.jpg"
+//    val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole3cropped.jpg"
+//    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/429713451_20745_bigger_rotatedcropped.jpg"
 
 
 //    //mole2
@@ -44,9 +44,9 @@ class compare {
 //    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/425806267_118435_bigger_rotatedcropped.jpg"
 
 
-//    //mole1
-//    val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole1.jpeg"
-//    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/429721776_20725_bigger.jpg"
+////    //mole1
+    val file1 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/mole1.jpeg"
+    val file2 = "/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/images/429721776_20725_bigger.jpg"
 
 
     val imgSrc: Mat = Imgcodecs.imread(file1)
@@ -143,7 +143,7 @@ class compare {
     var j:Int=0
     for(i<-0 until Output.rows()){
       for(j<-0 until Output.cols()){
-          if(Output.get(i,j){0}==0 || Output.get(i,j){1}==0 || Output.get(i,j){2}==0 ) Output.put(i,j,skinpix)
+          if(Output.get(i,j){0}==0 && Output.get(i,j){1}==0 && Output.get(i,j){2}==0 ) Output.put(i,j,skinpix)
         Imgcodecs.imwrite("homographyMatchesFilled.png", Output)
       }
     }
