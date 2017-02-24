@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_login){
             //manejo login
             showLogin();
-
         } else if (id == R.id.nav_camera) {
             Log.println(Log.INFO,"p","prueba");
             // Handle the camera action
