@@ -3,6 +3,7 @@ package com.example.cris.mytabs;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -80,17 +81,23 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_login){
+            //manejo login
+        } else if (id == R.id.nav_camera) {
+            Log.println(Log.INFO,"p","prueba");
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+            //manejo galer´ia de fotos
         } else if (id == R.id.nav_slideshow) {
-
+            //mostrar animación imágenes
+        } else if (id == R.id.nav_analysis) {
+            //manejar comparativa imágenes
+        } else if (id == R.id.nav_expert) {
+            //manejar contactar expertos
+        } else if (id == R.id.nav_volunteer) {
+            //manejar contactar voluntarios
         } else if (id == R.id.nav_manage) {
-
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
+            //manejar ajustes usuarios
 
         }
 
