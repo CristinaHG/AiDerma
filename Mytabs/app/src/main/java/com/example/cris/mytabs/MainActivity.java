@@ -1,5 +1,6 @@
 package com.example.cris.mytabs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -75,6 +77,11 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+   public void showLogin(){
+       Intent intent = new Intent(this, LoginActivity.class);
+       startActivity(intent);
+   }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -83,6 +90,8 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_login){
             //manejo login
+            showLogin();
+
         } else if (id == R.id.nav_camera) {
             Log.println(Log.INFO,"p","prueba");
             // Handle the camera action
