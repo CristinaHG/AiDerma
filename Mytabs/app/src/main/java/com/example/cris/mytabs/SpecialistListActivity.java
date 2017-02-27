@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.net.URI;
 import java.util.ArrayList;
 
 public class SpecialistListActivity extends ActionBarActivity {
@@ -25,24 +26,24 @@ public class SpecialistListActivity extends ActionBarActivity {
         setContentView(R.layout.recycler_layout);
 
         data=new ArrayList<Specialist>();
-        data.add(0,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(1,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(2,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(3,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(4,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(5,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(6,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(7,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(8,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(9,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(10,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(11,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(12,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(13,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(14,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(15,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(16,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
-        data.add(17,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+        data.add(0,new Specialist("Dr. Kathleen J. Smith", "/res/specialists/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(1,new Specialist("Dr. Kathleen J. Smith","/home/cris/mrcrstnherediagmez@gmail.com/AiDerma/Mytabs/app/src/main/res/specialists/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(2,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(3,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(4,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(5,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(6,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(7,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(8,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(9,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(10,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(11,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(12,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(13,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(14,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(15,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(16,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
+//        data.add(17,new Specialist("Dr. Kathleen J. Smith","http://dermpathatlanta.com/wp-content/uploads/2014/05/Dr-Kathleen-Smith_for-web.jpg"));
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);

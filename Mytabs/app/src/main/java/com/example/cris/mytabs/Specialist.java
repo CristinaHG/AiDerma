@@ -1,5 +1,9 @@
 package com.example.cris.mytabs;
 
+import android.graphics.Bitmap;
+
+import java.net.URI;
+
 /**
  * Created by cris on 27/02/17.
  */
@@ -21,5 +25,6 @@ public class Specialist {
     public String getImg(){
         return img;
     }
+
 
 }
