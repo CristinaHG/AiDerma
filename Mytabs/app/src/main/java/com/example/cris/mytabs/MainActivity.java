@@ -82,6 +82,11 @@ public class MainActivity extends AppCompatActivity
        startActivity(intent);
    }
 
+    public void showSpecialists(){
+        Intent intent = new Intent(this, SpecialistListActivity.class);
+        startActivity(intent);
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -102,6 +107,7 @@ public class MainActivity extends AppCompatActivity
             //manejar comparativa imágenes
         } else if (id == R.id.nav_expert) {
             //manejar contactar expertos
+            showSpecialists();
         } else if (id == R.id.nav_volunteer) {
             //manejar contactar voluntarios
         } else if (id == R.id.nav_manage) {

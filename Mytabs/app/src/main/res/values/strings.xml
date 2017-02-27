@@ -23,4 +23,5 @@
         <!--Contacts permissions are needed for providing email-->
         <!--completions."-->
     </string>
+    <string name="title_activity_specialist_list">SpecialistListActivity</string>
 </resources>
