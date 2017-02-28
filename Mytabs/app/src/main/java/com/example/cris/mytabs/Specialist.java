@@ -11,9 +11,9 @@ import java.net.URI;
 public class Specialist {
 
     private String name;
-    private String img;
+    private int img;
 
-    public Specialist(String name, String url){
+    public Specialist(String name, int url){
         this.name=name;
         this.img=url;
     }
@@ -22,7 +22,7 @@ public class Specialist {
         return name;
     }
 
-    public String getImg(){
+    public int getImg(){
         return img;
     }
 

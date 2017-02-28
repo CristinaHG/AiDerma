@@ -64,15 +64,14 @@ public class AdapterSpecialist extends RecyclerView.Adapter<AdapterSpecialist.Sp
             specialistName=(TextView) itemView.findViewById(R.id.txv_specialist);
             specialistImg=(ImageView) itemView.findViewById(R.id.imv_specialist);
 
-
-
-
         }
 
         public void bindSpecialist(Specialist specialist){
             specialistName.setText(specialist.getName());
-            Bitmap myBitmap= BitmapFactory.decodeFile(specialist.getImg());
-            specialistImg.setImageBitmap(myBitmap);
+//            Bitmap myBitmap= BitmapFactory.decodeResource(null,specialist.getImg());
+//            specialistImg.setImageBitmap(myBitmap);
+            specialistImg.setImageResource(specialist.getImg());
+
             //Picasso.with(specialistName.getContext()).load(specialist.getImg()).resize(40, 40).into(specialistImg);
 
         }
