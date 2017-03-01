@@ -1,7 +1,9 @@
 package com.example.cris.mytabs;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -87,6 +89,14 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    // taking photos with camera
+
+    public void takePicture(){
+        Intent intent = new Intent(this, CameraActivity.class);
+        startActivity(intent);
+    }
+
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -97,8 +107,8 @@ public class MainActivity extends AppCompatActivity
             //manejo login
             showLogin();
         } else if (id == R.id.nav_camera) {
-            Log.println(Log.INFO,"p","prueba");
             // Handle the camera action
+            takePicture();
         } else if (id == R.id.nav_gallery) {
             //manejo galer´ia de fotos
         } else if (id == R.id.nav_slideshow) {

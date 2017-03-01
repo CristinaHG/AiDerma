@@ -24,4 +24,5 @@
         <!--completions."-->
     </string>
     <string name="title_activity_specialist_list">SpecialistListActivity</string>
+    <string name="title_activity_camera">CameraActivity</string>
 </resources>
