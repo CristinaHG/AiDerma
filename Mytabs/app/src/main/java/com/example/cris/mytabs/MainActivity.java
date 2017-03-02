@@ -89,6 +89,11 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void showVolunteers(){
+        Intent intent = new Intent(this, VolunteersListActivity.class);
+        startActivity(intent);
+    }
+
     // taking photos with camera
 
     public void takePicture(){
@@ -120,6 +125,7 @@ public class MainActivity extends AppCompatActivity
             showSpecialists();
         } else if (id == R.id.nav_volunteer) {
             //manejar contactar voluntarios
+            showVolunteers();
         } else if (id == R.id.nav_manage) {
             //manejar ajustes usuarios
 

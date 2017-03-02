@@ -25,4 +25,5 @@
     </string>
     <string name="title_activity_specialist_list">SpecialistListActivity</string>
     <string name="title_activity_camera">CameraActivity</string>
+    <string name="title_activity_volunteers_list">VolunteersListActivity</string>
 </resources>
