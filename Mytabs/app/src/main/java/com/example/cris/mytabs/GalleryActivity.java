@@ -13,18 +13,22 @@ public class GalleryActivity extends AppCompatActivity {
 
     File imagesFolder = new File(Environment.getExternalStorageDirectory(), "AiDerma");
 
-    private final String image_titles[] = imagesFolder.list();
+//    private final String image_titles[] = imagesFolder.list();
+//
+//    private ArrayList<String> images_AbsolutePaths =createPathsArray();
 
-    private ArrayList<String> images_AbsolutePaths =createPathsArray();
+    private RecyclerView recView;
+
+    private ArrayList<CreateList> data;
 
 
 
-    private ArrayList<String> createPathsArray(){
+    private ArrayList<String> createPathsArray(File folder ){
 
         ArrayList<String> image_paths =new ArrayList<>();
 
-        for(int i=0; i< image_titles.length;i++){
-            image_paths.add(imagesFolder.getAbsolutePath()+"/"+image_titles[i]);
+        for(int i=0; i< folder.list().length;i++){
+            image_paths.add(imagesFolder.getAbsolutePath()+"/"+folder.list()[i]);
         }
         return image_paths;
     }
@@ -35,31 +39,36 @@ public class GalleryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gallery);
+        setContentView(R.layout.recycler_layout);
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.RecView);
-        recyclerView.setHasFixedSize(true);
+        data=new ArrayList<CreateList>();
+        String image_titles[] = imagesFolder.list();
+        ArrayList<String> images_AbsolutePaths =createPathsArray(imagesFolder);
+        data = prepareData(image_titles,images_AbsolutePaths);
+
+
+        recView = (RecyclerView) findViewById(R.id.RecView);
+        recView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
-        recyclerView.setLayoutManager(layoutManager);
+        recView.setLayoutManager(layoutManager);
 
-        ArrayList<CreateList> createLists = prepareData();
-        GalleryAdapter adapter = new GalleryAdapter(getApplicationContext(), createLists);
-        recyclerView.setAdapter(adapter);
+//        ArrayList<CreateList> createLists = prepareData();
+        GalleryAdapter adapter = new GalleryAdapter(getApplicationContext(), data);
+        recView.setAdapter(adapter);
 
     }
 
-    private ArrayList<CreateList> prepareData(){
+    private ArrayList<CreateList> prepareData(String[] t,ArrayList<String> s){
 
         ArrayList<CreateList> theimage = new ArrayList<>();
 
-        for(int i = 0; i< image_titles.length; i++){
+        for(int i = 0; i< t.length; i++){
             CreateList createList = new CreateList();
-            createList.setImage_title(image_titles[i]);
-            createList.setImage_AbsolutePath(images_AbsolutePaths.get(i));
+            createList.setImage_title(t[i]);
+            createList.setImage_AbsolutePath(s.get(i));
             theimage.add(createList);
         }
-
         return theimage;
     }
 }
