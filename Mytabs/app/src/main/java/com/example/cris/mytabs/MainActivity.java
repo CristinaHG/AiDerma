@@ -101,6 +101,10 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void showGallery(){
+        Intent intent = new Intent(this, GalleryActivity.class);
+        startActivity(intent);
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -116,6 +120,7 @@ public class MainActivity extends AppCompatActivity
             takePicture();
         } else if (id == R.id.nav_gallery) {
             //manejo galer´ia de fotos
+            showGallery();
         } else if (id == R.id.nav_slideshow) {
             //mostrar animación imágenes
         } else if (id == R.id.nav_analysis) {

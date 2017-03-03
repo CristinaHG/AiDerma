@@ -43,7 +43,7 @@ public class CameraActivity extends AppCompatActivity {
         //añadimos el nombre de la imagen
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
         String date = dateFormat.format(new Date() );
-        File image = new File(imagesFolder, "foto"+date+".jpg");
+        File image = new File(imagesFolder, "foto"+date+".png");
         mCurrentPhotoPath=image.getAbsolutePath();
         Uri uriSavedImage = Uri.fromFile(image);
         //Le decimos al Intent que queremos grabar la imagen
