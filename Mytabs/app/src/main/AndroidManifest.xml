@@ -45,7 +45,8 @@
             android:name=".VolunteersListActivity"
             android:label="@string/title_activity_volunteers_list"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".GalleryActivity"></activity>
+        <activity android:name=".GalleryActivity" />
+        <activity android:name=".Image_BodyPart"></activity>
     </application>
 
 </manifest>
